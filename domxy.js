@@ -32,7 +32,6 @@ const toKebabCase = (name) => {
  */
 export const domxy = new Proxy({}, {
   get: (_, tag) => {
-    // Convert PascalCase to kebab-case
     const kebabTag = /^[A-Z]/.test(tag) ? toKebabCase(tag) : tag;
 
     return (...args) => {
@@ -52,10 +51,14 @@ export const domxy = new Proxy({}, {
             for (const [dataKey, dataValue] of Object.entries(value)) {
               attributes[`data-${toKebabCase(dataKey)}`] = dataValue;
             }
+          } else if (key === "aria") {
+            for (const [ariaKey, ariaValue] of Object.entries(value)) {
+              attributes[`aria-${toKebabCase(ariaKey)}`] = ariaValue;
+            }
           } else if (key in document.createElement("div")) {
             properties[key] = value;
           } else {
-            attributes[key] = value;
+            attributes[toKebabCase(key)] = value;
           }
         }
       }
@@ -63,37 +66,28 @@ export const domxy = new Proxy({}, {
 
       // Check if the tag is a valid HTML element, a valid SVG element, or a defined custom element
       if (!isValidHtmlTag(kebabTag) && !isValidSvgTag(kebabTag) && !customElements.get(kebabTag)) {
-        throw new Error(`Element "${kebabTag}" is not a valid HTML element, SVG element, or a defined custom element.`);
+        throw new Error(`Invalid tag: ${kebabTag}`);
       }
 
       // Create the element
       const element = isSvg ? document.createElementNS("http://www.w3.org/2000/svg", kebabTag) : document.createElement(kebabTag);
 
-      // Add xmlns attribute for SVG elements
-      if (isSvg && !attributes.xmlns) {
-        element.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-      }
-
-      // Add attributes
+      // Set attributes
       for (const [key, value] of Object.entries(attributes)) {
-        if (isSvg) {
-          element.setAttributeNS(null, key, value);
-        } else {
-          element.setAttribute(key, value);
-        }
+        element.setAttribute(key, value);
       }
 
-      // Add properties
+      // Set properties
       for (const [key, value] of Object.entries(properties)) {
         element[key] = value;
       }
 
       // Append children
       for (const child of children) {
-        if (typeof child === "string" || typeof child === "number") {
-          element.appendChild(document.createTextNode(child));
-        } else if (child instanceof Node) {
-          element.appendChild(child);
+        if (Array.isArray(child)) {
+          element.append(...child);
+        } else {
+          element.append(child);
         }
       }
 

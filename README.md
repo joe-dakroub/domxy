@@ -1,11 +1,11 @@
 # Domxy
-The `domxy` Proxy function is a simple and expressive way to create DOM and SVG elements in JavaScript without the need to learn a special syntax or a build tool.
+The `domxy` JavaScript [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object is a simple and expressive way to create DOM and SVG elements in JavaScript without the need to learn a special syntax or use a build tool.
 
 ## Features
 - Create DOM and SVG elements with ease
 - Pure JavaScript, no JSX or special syntax
-- Every element is simply a function call
-- Optionally pass attributes and properties as an object
+- Every element is simple a function call
+- Optionally pass attributes, properties and `data-*` as an object
 - Supports Custom Elements with PascalCased-names for easy identification
 - No need for a build tool
 
@@ -13,13 +13,13 @@ The `domxy` Proxy function is a simple and expressive way to create DOM and SVG 
 
 ### JavaScript
 ```js
-import { domxy } from "/domxy.js";
-import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js";
+import { domxy } from "/domxy.js"
+import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js"
 
-const { button, code, div, fieldset, form, h1, h2, h3, hr, input, label, legend, li, main, p, pre, ul, SlButton } = domxy;
+const { div, form, input, label, SlButton } = domxy
 
-const exampleForm = form({ dataset: { controller: "hello" } },
-  div(
+const example = form({ dataset: { controller: "hello" } },
+  div({ class: "form-group" },
     label({ for: "name" }, "Name"),
     input({
       dataset: {
@@ -32,15 +32,15 @@ const exampleForm = form({ dataset: { controller: "hello" } },
     }),
   ),
   SlButton({ dataset: { action: "click->hello#greet" } }, "Submit"),
-);
+)
 
-document.body.appendChild(exampleForm);
+document.body.appendChild(example)
 ```
 
 ### Rendered DOM tree
 ```html
 <form data-controller="hello">
-  <div>
+  <div class="form-group">
     <label for="name">Name</label>
     <input data-hello-target="name" id="name" name="name" placeholder="enter a name" type="text">
   </div>
@@ -52,7 +52,7 @@ document.body.appendChild(exampleForm);
 Notice that you must destructure the element names out of the `domxy` object:
 
 ```js
-const { h1, p, textarea, SlCarousel, SwiperContainer, SwiperSlide } = domxy;
+const { h1, p, textarea, SlCarousel, SwiperContainer, SwiperSlide } = domxy
 ```
 
 *Per standard JavaScript practices, an error will be thrown if you try to access a function without it being declared first.*
@@ -64,6 +64,44 @@ form(
   SlInput({ variant: "danger" }),
   SlButton({ type: "submit" }, "Submit")
 )
+```
+
+Custom `data-*` attributes can be assigned using the standard `dataset` property:
+
+### JS
+```js
+div({ dataset: { size: "lg", type: "container" } })
+```
+
+### HTML
+```html
+<div data-size="lg" data-type="container"></div>
+```
+
+ARIA attributes can be set using Camel case names or the `aria` property:
+
+```js
+span({
+  aria: {
+    labelledby: "tac",
+  },
+  ariaChecked: true,
+  role: "checkbox",
+  tabindex: 0
+}),
+span({ id: "tac" }, "I agree to the Terms and Conditions.")
+```
+
+### HTML
+```html
+<span
+  aria-checked="false"
+  aria-labelledby="tac"
+  role="checkbox"
+  tabindex="0"
+></span>
+<span id="tac">I agree to the Terms and Conditions.</span>
+
 ```
 
 ## More Examples
@@ -83,7 +121,7 @@ Boolean properties are set using `true` or `false`:
 ```js
 details({ open: true },
   summary("Details"),
-  "Something small enough to escape casual notice."
+  p({ contenteditable: true }, "Something small enough to escape casual notice.")
 );
 ```
 

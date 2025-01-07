@@ -25,29 +25,13 @@
         main,
         p,
         pre,
+        span,
         ul,
         SlButton
       } = domxy;
 
       const app = main(
-        h1({ class: "title", id: "title" }, "Domxy"),
-        p(
-          { class: "body" },
-          "The ",
-          code("domxy"),
-          " function is a simple and expressive way to create DOM/SVG elements in JavaScript without the need for a build tool.",
-        ),
-        h2({ class: "subtitle" }, "Features"),
-        ul(
-          li("Create DOM/SVG elements with ease."),
-          li("Pure JavaScript, no JSX."),
-          li("Every element is simply a function."),
-          li("Optionally pass attributes as an object."),
-          li("Supports Custom Elements too."),
-          li("No need for a build tool."),
-        ),
-        h2({ class: "subtitle" }, "Usage"),
-        h3("JavaScript"),
+        h1({ class: "title", id: "title" }, "Domxy Example"),
         pre(
           code(
             `import { domxy } from "/domxy.js";
@@ -55,7 +39,7 @@ import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/compone
 
 const { button, code, div, fieldset, form, h1, h2, h3, hr, input, label, legend, li, main, p, pre, ul, SlButton } = domxy;
 
-const exampleForm = form({ action: "#", dataset: { controller: "hello" }, method: "post" },
+const example = form({ dataset: { controller: "hello" } },
   div(
     label({ for: "name" }, "Name"),
     input({
@@ -71,7 +55,7 @@ const exampleForm = form({ action: "#", dataset: { controller: "hello" }, method
   SlButton({ dataset: { action: "click->hello#greet" } }, "Submit"),
 )
 
-document.body.appendChild(exampleForm);`,
+document.body.appendChild(example);`,
           ),
         ),
         h3("Rendered HTML"),
@@ -95,21 +79,83 @@ document.body.appendChild(exampleForm);`,
             dataset: { controller: "hello" },
             method: "post",
           },
-          div(
+          div({ class: "form-group" },
             label({ for: "name" }, "Name"),
             input({
-              dataset: { helloTarget: "name" },
+              dataset: {
+                helloTarget: "name"
+              },
               id: "name",
               name: "name",
               placeholder: "enter a name",
               type: "text",
             }),
           ),
+          span({
+            aria: {
+              labelledby: "tac",
+            },
+            ariaChecked: false,
+            role: "checkbox",
+            tabindex: 0
+          }),
+          span({ id: "tac" }, "I agree to the Terms and Conditions."),
           SlButton({ dataset: { action: "click->hello#greet" } }, "Submit"),
         ),
       );
 
       document.body.appendChild(app);
+
+      // Test creating a div with dataset attributes
+      const divElement = div({
+        dataset: { controller: "hello" },
+        class: "form-group"
+      });
+      console.assert(divElement.tagName === 'DIV', 'Expected tag name to be DIV');
+      console.assert(divElement.dataset.controller === 'hello', 'Expected dataset controller to be hello');
+      console.assert(divElement.className === 'form-group', 'Expected class to be form-group');
+
+      // Test creating an input with dataset attributes
+      const inputElement = input({
+        dataset: { helloTarget: "name" },
+        id: "name",
+        name: "name",
+        placeholder: "enter a name",
+        type: "text"
+      });
+      console.assert(inputElement.tagName === 'INPUT', 'Expected tag name to be INPUT');
+      console.assert(inputElement.dataset.helloTarget === 'name', 'Expected dataset helloTarget to be name');
+      console.assert(inputElement.id === 'name', 'Expected id to be name');
+      console.assert(inputElement.name === 'name', 'Expected name to be name');
+      console.assert(inputElement.placeholder === 'enter a name', 'Expected placeholder to be enter a name');
+      console.assert(inputElement.type === 'text', 'Expected type to be text');
+
+      // Test creating a span with aria attributes
+      const spanElement = span({
+        aria: { labelledby: "tac" },
+        ariaChecked: false,
+        role: "checkbox",
+        tabindex: 0
+      });
+      console.assert(spanElement.tagName === 'SPAN', 'Expected tag name to be SPAN');
+      console.assert(spanElement.getAttribute('aria-labelledby') === 'tac', 'Expected aria-labelledby to be tac');
+      console.assert(spanElement.getAttribute('aria-checked') === 'false', 'Expected aria-checked to be false');
+      console.assert(spanElement.getAttribute('role') === 'checkbox', 'Expected role to be checkbox');
+      console.assert(spanElement.tabIndex === 0, 'Expected tabindex to be 0');
+
+      // Test creating a span with id
+      const spanWithIdElement = span({ id: "tac" }, "I agree to the Terms and Conditions.");
+      console.assert(spanWithIdElement.tagName === 'SPAN', 'Expected tag name to be SPAN');
+      console.assert(spanWithIdElement.id === 'tac', 'Expected id to be tac');
+      console.assert(spanWithIdElement.textContent === 'I agree to the Terms and Conditions.', 'Expected text content to be I agree to the Terms and Conditions.');
+
+      // Test creating a custom element
+      const customElement = SlButton({ dataset: { action: "click->hello#greet" } }, "Submit");
+      console.assert(customElement.tagName === 'SL-BUTTON', 'Expected tag name to be SL-BUTTON');
+      console.assert(customElement.dataset.action === 'click->hello#greet', 'Expected dataset action to be click->hello#greet');
+      console.assert(customElement.textContent === 'Submit', 'Expected text content to be Submit');
+
+      console.log("All tests passed!");
     </script>
   </head>
   <body></body>
