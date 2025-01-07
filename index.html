@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domxy Example</title>
+    <script type="module">
+      import { domxy } from "/domxy.js";
+      import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js";
+
+      const {
+        button,
+        code,
+        div,
+        fieldset,
+        form,
+        h1,
+        h2,
+        h3,
+        hr,
+        input,
+        label,
+        legend,
+        li,
+        main,
+        p,
+        pre,
+        ul,
+        SlButton
+      } = domxy;
+
+      const app = main(
+        h1({ class: "title", id: "title" }, "Domxy"),
+        p(
+          { class: "body" },
+          "The ",
+          code("domxy"),
+          " function is a simple and expressive way to create DOM/SVG elements in JavaScript without the need for a build tool.",
+        ),
+        h2({ class: "subtitle" }, "Features"),
+        ul(
+          li("Create DOM/SVG elements with ease."),
+          li("Pure JavaScript, no JSX."),
+          li("Every element is simply a function."),
+          li("Optionally pass attributes as an object."),
+          li("Supports Custom Elements too."),
+          li("No need for a build tool."),
+        ),
+        h2({ class: "subtitle" }, "Usage"),
+        h3("JavaScript"),
+        pre(
+          code(
+            `import { domxy } from "/domxy.js";
+import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js";
+
+const { button, code, div, fieldset, form, h1, h2, h3, hr, input, label, legend, li, main, p, pre, ul, SlButton } = domxy;
+
+const exampleForm = form({ action: "#", dataset: { controller: "hello" }, method: "post" },
+  div(
+    label({ for: "name" }, "Name"),
+    input({
+      dataset: {
+        helloTarget: "name"
+      },
+      id: "name",
+      name: "name",
+      placeholder: "enter a name",
+      type: "text"
+    }),
+  ),
+  SlButton({ dataset: { action: "click->hello#greet" } }, "Submit"),
+)
+
+document.body.appendChild(exampleForm);`,
+          ),
+        ),
+        h3("Rendered HTML"),
+        pre(
+          code(
+            `
+<form action="#" data-controller="hello" method="post" data-type="form">
+  <div>
+    <label for="name">Name</label>
+    <input data-hello-target="name" id="name" name="name" placeholder="enter a name" type="text">
+  </div>
+  <sl-button data-action="click->hello#greet">Submit</sl-button>
+</form>
+`,
+          ),
+        ),
+        h3("Rendered Output"),
+        form(
+          {
+            action: "#",
+            dataset: { controller: "hello" },
+            method: "post",
+          },
+          div(
+            label({ for: "name" }, "Name"),
+            input({
+              dataset: { helloTarget: "name" },
+              id: "name",
+              name: "name",
+              placeholder: "enter a name",
+              type: "text",
+            }),
+          ),
+          SlButton({ dataset: { action: "click->hello#greet" } }, "Submit"),
+        ),
+      );
+
+      document.body.appendChild(app);
+    </script>
+  </head>
+  <body></body>
+</html>
