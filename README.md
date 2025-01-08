@@ -1,24 +1,22 @@
-# Domxy
-The `domxy` JavaScript [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object is a simple and expressive way to create DOM and SVG elements in JavaScript without the need to learn a special syntax or use a build tool.
+# DOMXY
 
-## Features
-- Create DOM and SVG elements with ease
-- Pure JavaScript, no JSX or special syntax
-- Every element is simple a function call
-- Optionally pass attributes, properties and `data-*` as an object
-- Supports Custom Elements with PascalCased-names for easy identification
-- No need for a build tool
+[domxy](https://domxy.js.org) is a tiny library that makes creating HTML and SVG elements in JavaScript expressive and enjoyable without the need for a build tool.
 
-## Usage
+## Example
 
 ### JavaScript
 ```js
-import { domxy } from "/domxy.js"
+// Shoelace SlButton component
 import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js"
 
+// Domxy library
+import { domxy } from "https://domxy.js.org/domxy.js"
+
+// Destructure elements you want to use (including Custom Elements)
 const { div, form, input, label, SlButton } = domxy
 
-const example = form({ dataset: { controller: "hello" } },
+// Example form
+const nameForm = form({ dataController: "hello" } },
   div({ class: "form-group" },
     label({ for: "name" }, "Name"),
     input({
@@ -34,10 +32,11 @@ const example = form({ dataset: { controller: "hello" } },
   SlButton({ dataset: { action: "click->hello#greet" } }, "Submit"),
 )
 
-document.body.appendChild(example)
+// Append to the DOM
+document.body.append(nameForm)
 ```
 
-### Rendered DOM tree
+### DOM
 ```html
 <form data-controller="hello">
   <div class="form-group">
@@ -48,38 +47,65 @@ document.body.appendChild(example)
 </form>
 ```
 
+## Features
+- ✅ Create HTML and SVG elements expressively and natively
+- ☕ Pure JavaScript, no special syntax to learn
+- 📟 Every element is simple a function call
+- 🪪 Optionally pass attributes, properties and `data-*` as an object
+- ⚡ Supports Custom Elements with Pascal-cased names for easy identification
+- 🚫 No need for a build tool
+
+## Why?
+Whether you need to or enjoy working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get.
+
+`domxy` makes working with DOM nodes as easy and enjoyable as other alternative syntaxes that require build tools, but requires little time to learn and very little overhead to run.
+
 ## Details
-Notice that you must destructure the element names out of the `domxy` object:
+`domxy` is a tiny [JavaScript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that generates DOM elements based on the name of the function being called.
+
+You must destructure the element names you want to use out of the `domxy` object before using:
 
 ```js
 const { h1, p, textarea, SlCarousel, SwiperContainer, SwiperSlide } = domxy
 ```
 
-*Per standard JavaScript practices, an error will be thrown if you try to access a function without it being declared first.*
+It is usually easiest to markup the DOM tree first using whatever element functions you need, and then come back and destructure the used elements after. [Copilot](https://copilot.microsoft.com) can help with this.
 
-Custom Elements can be created by their Pascal case name:
+**🚨 An error will be thrown if you try to access an element function without it being declared first 🚨**
+
+Custom Element instances can be created using Pascal case:
 
 ```js
 form(
-  SlInput({ variant: "danger" }),
-  SlButton({ type: "submit" }, "Submit")
+  SlInput({ variant: "danger" }), // sl-input
+  SlButton({ type: "submit" }, "Submit") // sl-button
 )
 ```
 
-Custom `data-*` attributes can be assigned using the standard `dataset` property:
+[Data attributes](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes) can be assigned using Camel case names or the `dataset` property:
 
-### JS
+### JavaScript
 ```js
-div({ dataset: { size: "lg", type: "container" } })
+div({ dataColor: "tomato", dataset: { size: "lg", type: "container" } })
 ```
 
-### HTML
+### DOM
 ```html
-<div data-size="lg" data-type="container"></div>
+<div data-color="tomato" data-size="lg" data-type="container"></div>
 ```
 
-ARIA attributes can be set using Camel case names or the `aria` property:
+Boolean properties are set using `true` or `false`:
 
+```js
+details({ open: true },
+  summary("Details"),
+  p({ contenteditable: true }, "Something small enough to escape casual notice.")
+);
+```
+
+[ARIA attributes](https://www.w3.org/TR/using-aria/) can be assigned using Camel case names or the `aria` property:
+
+### JavaScript
 ```js
 span({
   aria: {
@@ -92,7 +118,7 @@ span({
 span({ id: "tac" }, "I agree to the Terms and Conditions.")
 ```
 
-### HTML
+### DOM
 ```html
 <span
   aria-checked="false"
@@ -104,47 +130,91 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")
 
 ```
 
-## More Examples
-
-Render SVG with the same ease as DOM nodes:
+Create SVG elements just like any other HTML element:
 
 ```js
-svg({ ariaHidden: true, class: "icon", viewBox: "0 0 20 20" },
-  path({
-    d: "M17,15.98059V17a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V15.98059a.9998.9998,0,0,1,.37531-.78082l2.556-2.0448A4.00431,4.00431,0,0,0,9.2998,15h1.4004a4.00431,4.00431,0,0,0,3.36853-1.845l2.556,2.0448A.9998.9998,0,0,1,17,15.98059ZM7.47211,11.81226A2,2,0,0,0,9.29974,13h1.40052a2,2,0,0,0,1.82763-1.18774L13.65527,9.2757A4.00024,4.00024,0,0,0,14,7.65112V6a3.97577,3.97577,0,0,0-4-4A4.1928,4.1928,0,0,0,6,6.17206V7.65112A4.00024,4.00024,0,0,0,6.34473,9.2757Z",
-  })
-);
+button({ type: "button" },
+  svg({ ariaHidden: true, class: "icon", viewBox: "0 0 20 20" },
+    path({
+      d: "M17,15.98059V17a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V15.98059a.9998.9998,0,0,1,.37531-.78082l2.556-2.0448A4.00431,4.00431,0,0,0,9.2998,15h1.4004a4.00431,4.00431,0,0,0,3.36853-1.845l2.556,2.0448A.9998.9998,0,0,1,17,15.98059ZM7.47211,11.81226A2,2,0,0,0,9.29974,13h1.40052a2,2,0,0,0,1.82763-1.18774L13.65527,9.2757A4.00024,4.00024,0,0,0,14,7.65112V6a3.97577,3.97577,0,0,0-4-4A4.1928,4.1928,0,0,0,6,6.17206V7.65112A4.00024,4.00024,0,0,0,6.34473,9.2757Z",
+    })
+  ),
+  "Acccount"
+)
 ```
 
-Boolean properties are set using `true` or `false`:
+Create a [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) using the `fragment` function:
 
+### JavaScript
 ```js
-details({ open: true },
-  summary("Details"),
-  p({ contenteditable: true }, "Something small enough to escape casual notice.")
-);
+fragment(
+  h1("Title"),
+  p("Intro paragraph.")
+)
 ```
 
-If used inside of a JavaScript class, you can take advantage of object properties to "define and assign" elements for later use with elegance:
+### DOM
+```html
+#document-fragment
+<h1>Title</h1>
+<p>Intro paragraph.</p>
+```
+
+**⚠️ DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted. ⚠️**
+
+In addition to `String`, `Number` and `Boolean` types, attributes can accept `Date`, `Array` and `Object` types as values by stringifying them into JSON:
+
+
+### JavaScript
+```js
+div({ dataModel: { type: "user", active: false } })
+```
+
+### DOM
+```html
+<div data-model="{"type":"user","active":false}"></div>
+```
+
+**ℹ️ Property values do not get stringified. Not recommended for large sets of data. ℹ️**
+
+While not a `domxy` feature, if used inside of a JavaScript class, you can take advantage of inline object property assignment to "define and assign" elements as references for later use:
 
 ```js
-class HsCard extends HTMLElement {
+class HsCard extends BitElement {
+  static properties = {
+    "copy": { type: String, required: true },
+    "image": { type: String },
+    "link": { type: URL },
+    "title": { type: String, required: true },
+  }
+
   constructor() {
     super();
-    const shadow = this.attachShadow({ mode: "open" });
-    shadow.append(
-      this.image = img(),
-      this.title = h2(),
-      p("Default copy ",
-        this.link = a("Action link")
+    this.shadowRoot.append(
+      this.$image = img({ alt: "" }),
+      this.$title = h2(),
+      this.$copy = p("Default copy ",
+        this.$link = a("Card link")
       ),
     );
   }
 
-  update({ image, link, title }) {
-    this.image.src = image;
-    this.link.href = link;
-    this.title = title;
+  update() {
+    this.$copy.textContent = this.copy;
+    this.$image.src = this.image;
+    this.$link.href = this.link.href;
+    this.$title.textContent = this.title;
   }
 }
 ```
+
+## Tests
+1. Run `index.html` in a web browser
+2. Open the Developer Tools and select the Console tab
+3. If all tests passed, you should see `All tests passed!` or the error and line number in the console
+
+## Changelog
+Detailed changes for each release are documented in the [release notes]().
+
+## Sponsorship
+If you find `domxy` useful, please consider [becoming a sponsor]().

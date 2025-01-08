@@ -65,21 +65,39 @@ export const domxy = new Proxy({}, {
       children = args;
 
       // Check if the tag is a valid HTML element, a valid SVG element, or a defined custom element
-      if (!isValidHtmlTag(kebabTag) && !isValidSvgTag(kebabTag) && !customElements.get(kebabTag)) {
+      if (!isValidHtmlTag(kebabTag) && !isValidSvgTag(kebabTag) && !customElements.get(kebabTag) && kebabTag !== 'fragment') {
         throw new Error(`Invalid tag: ${kebabTag}`);
       }
 
-      // Create the element
-      const element = isSvg ? document.createElementNS("http://www.w3.org/2000/svg", kebabTag) : document.createElement(kebabTag);
-
-      // Set attributes
-      for (const [key, value] of Object.entries(attributes)) {
-        element.setAttribute(key, value);
+      // Create the element or fragment
+      let element;
+      if (kebabTag === 'fragment') {
+        element = document.createDocumentFragment();
+        if (Object.keys(attributes).length > 0 || Object.keys(properties).length > 0) {
+          console.warn('Warning: Fragments do not support attributes or properties.');
+        }
+      } else {
+        element = isSvg ? document.createElementNS("http://www.w3.org/2000/svg", kebabTag) : document.createElement(kebabTag);
       }
 
-      // Set properties
-      for (const [key, value] of Object.entries(properties)) {
-        element[key] = value;
+      // Set attributes if not a fragment
+      if (kebabTag !== 'fragment') {
+        for (const [key, value] of Object.entries(attributes)) {
+          if (key === 'dataset') {
+            for (const [dataKey, dataValue] of Object.entries(value)) {
+              element.dataset[dataKey] = JSON.stringify(dataValue);
+            }
+          } else if (typeof value === 'object') {
+            element.setAttribute(key, JSON.stringify(value));
+          } else {
+            element.setAttribute(key, value);
+          }
+        }
+
+        // Set properties
+        for (const [key, value] of Object.entries(properties)) {
+          element[key] = value;
+        }
       }
 
       // Append children
