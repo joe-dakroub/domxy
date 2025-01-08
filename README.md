@@ -66,7 +66,7 @@ Whether you need to or enjoy working with DOM elements directly in JavaScript, y
 You must destructure the element names you want to use out of the `domxy` object before using:
 
 ```js
-const { h1, p, textarea, SlCarousel, SwiperContainer, SwiperSlide } = domxy
+const { div, form, input, label, SlButton } = domxy
 ```
 
 It is usually easiest to markup the DOM tree first using whatever element functions you need, and then come back and destructure the used elements after. [Copilot](https://copilot.microsoft.com) can help with this.
@@ -162,7 +162,7 @@ fragment(
 
 **⚠️ DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted. ⚠️**
 
-In addition to `String`, `Number` and `Boolean` types, attributes can accept `Date`, `Array` and `Object` types as values by stringifying them into JSON:
+In addition to `String`, `Number` and `Boolean` types, attributes can accept `Date`, `Array` and `Object` types as values by calling `JSON.stringify` on them:
 
 
 ### JavaScript
@@ -212,6 +212,9 @@ class HsCard extends BitElement {
 1. Run `index.html` in a web browser
 2. Open the Developer Tools and select the Console tab
 3. If all tests passed, you should see `All tests passed!` or the error and line number in the console
+
+## License
+`domxy` is released under [The Unlicense](https://unlicense.org/).
 
 ## Changelog
 Detailed changes for each release are documented in the [release notes]().

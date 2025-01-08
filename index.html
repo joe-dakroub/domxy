@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Domxy Example with Tests</title>
+    <title>Domxy - Elegant HTML and SVG elements in JavaScript</title>
     <script type="module">
       import { domxy } from "/domxy.js";
       import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js";
 
       const {
+        a,
         button,
         code,
         div,
@@ -27,26 +28,34 @@
         p,
         pre,
         span,
+        strong,
         ul,
         SlButton,
       } = domxy;
 
       const app = main(
-        h1({ class: "title", id: "title" }, "Domxy Example"),
+        h1({ class: "title", id: "title" }, "DOMXY"),
+        p(
+          a({ href: "https://domxy.js.org" }, "domxy"),
+          " is a tiny library that makes creating HTML and SVG elements in JavaScript expressive and enjoyable without the need for a build tool.",
+        ),
+
+        h2("Example"),
+        h3("JavaScript"),
         pre(
           code(
-            `import { domxy } from "/domxy.js";
-import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js"; // Example Web Component
+            `// Shoelace SlButton component
+import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js"
 
-const { button, code, div, fieldset, form, h1, h2, h3, hr, input, label, legend, li, main, p, pre, ul, SlButton } = domxy;
+// Domxy library
+import { domxy } from "https://domxy.js.org/domxy.js"
 
-const example = form({
-  "data-test": "form",
-  dataset: {
-    controller: "hello",
-    model: { type: "user", active: false }
-  }},
-  div(
+// Destructure elements you want to use (including Custom Elements)
+const { div, form, input, label, SlButton } = domxy
+
+// Example form
+const nameForm = form({ dataController: "hello" } },
+  div({ class: "form-group" },
     label({ for: "name" }, "Name"),
     input({
       dataset: {
@@ -58,86 +67,160 @@ const example = form({
       type: "text"
     }),
   ),
-  div({ class: "form-group" },
-    span({
-      aria: {
-        labelledby: "tac",
-      },
-      ariaChecked: false,
-      role: "checkbox",
-      tabindex: 0
-    }),
-    span({ id: "tac" }, "I agree to the Terms and Conditions."),
-  ),
   SlButton({ dataset: { action: "click->hello#greet" } }, "Submit"),
 )
 
-document.body.appendChild(example);`,
+// Append to the DOM
+document.body.append(nameForm)`,
           ),
         ),
-        h3("Rendered HTML"),
+        h3("DOM"),
         pre(
           code(
             `
-<form action="#" data-controller="hello" data-model="{"type":"user","active":false}" method="post" data-type="form">
+<form action="#" data-controller="hello">
   <div class="form-group">
     <label for="name">Name</label>
     <input data-hello-target="name" id="name" name="name" placeholder="enter a name" type="text">
-  </div>
-  <div class="form-group">
-    <span aria-labelledby="tac" aria-checked="false" role="checkbox" tabindex="0"></span>
-    <span id="tac">I agree to the Terms and Conditions.</span>
   </div>
   <sl-button data-action="click->hello#greet">Submit</sl-button>
 </form>
 `,
           ),
         ),
-        h3("Rendered Output"),
-        form(
-          {
-            action: "#",
-            "data-test": "form",
-            dataset: {
-              controller: "hello",
-              model: { type: "user", active: false },
-            },
-            method: "post",
-          },
-          div(
-            { class: "form-group" },
-            label({ for: "name" }, "Name"),
-            input({
-              dataset: {
-                helloTarget: "name",
-              },
-              id: "name",
-              name: "name",
-              placeholder: "enter a name",
-              type: "text",
-            }),
-          ),
-          div(
-            { class: "form-group" },
-            span({
-              aria: {
-                labelledby: "tac",
-              },
-              ariaChecked: false,
-              role: "checkbox",
-              tabindex: 0,
-            }),
-            span({ id: "tac" }, "I agree to the Terms and Conditions."),
-          ),
-          fragment({ name: "test" }, hr()),
-          SlButton(
-            { dataset: { action: "click->hello#greet" } },
-            "Submit",
+
+        h2("Features"),
+        ul(
+          li("✅ Create HTML and SVG elements expressively and natively"),
+          li("☕ Pure JavaScript, no special syntax to learn"),
+          li("📟 Every element is simple a function call"),
+          li("🪪 Optionally pass attributes, properties and `data-*` as an object"),
+          li("⚡ Supports Custom Elements with Pascal-cased names for easy identification"),
+          li("🚫 No need for a build tool"),
+        ),
+
+        h2("Why?"),
+        p("Whether you need to or enjoy working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get."),
+        p(code("domxy"), " makes working with DOM nodes as easy and enjoyable as other alternative syntaxes that require build tools, but requires little time to learn and very little overhead to run."),
+
+        h2("Details"),
+        p(code("domxy"), " is a tiny ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" }, "JavaScript Proxy"), " object that generates DOM elements based on the name of the function being called."),
+        p("You must destructure the element names you want to use out of the domxy object before using:"),
+        pre(
+          code(
+            `const { div, form, input, label, SlButton } = domxy`,
           ),
         ),
+        p("It is usually easiest to markup the DOM tree first using whatever element functions you need, and then come back and destructure the used elements after. ", a({ href: "https://copilot.microsoft.com" }, "Copilot"), " can help with this."),
+        strong("🚨 An error will be thrown if you try to access an element function without it being declared first 🚨"),
+
+        p("Custom Element instances can be created using Pascal case:"),
+        pre(
+          code(
+            `
+form(
+  SlInput({ variant: "danger" }), // sl-input
+  SlButton({ type: "submit" }, "Submit") // sl-button
+)`,
+          ),
+        ),
+
+        p(a({ href: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes" }, "Data attributes"), " can be assigned using Camel case names or the ", code("dataset"), " property:"),
+        h3("JavaScript"),
+        pre(
+          code(`
+span({ aria: { labelledby: "tac", }, ariaChecked: true, role: "checkbox", tabindex: 0 }),
+span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
+        ),
+        h3("DOM"),
+        pre(
+          code(`
+<span aria-checked="false" aria-labelledby="tac" role="checkbox" tabindex="0"></span>
+<span id="tac">I agree to the Terms and Conditions.</span>`)
+        ),
+
+        p("Create SVG elements just like any other HTML element:"),
+        pre(
+          code(`
+button({ type: "button" },
+  svg({ ariaHidden: true, class: "icon", viewBox: "0 0 20 20" },
+    path({
+      d: "M17,15.98059V17a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V15.98059a.9998.9998,0,0,1,.37531-.78082l2.556-2.0448A4.00431,4.00431,0,0,0,9.2998,15h1.4004a4.00431,4.00431,0,0,0,3.36853-1.845l2.556,2.0448A.9998.9998,0,0,1,17,15.98059ZM7.47211,11.81226A2,2,0,0,0,9.29974,13h1.40052a2,2,0,0,0,1.82763-1.18774L13.65527,9.2757A4.00024,4.00024,0,0,0,14,7.65112V6a3.97577,3.97577,0,0,0-4-4A4.1928,4.1928,0,0,0,6,6.17206V7.65112A4.00024,4.00024,0,0,0,6.34473,9.2757Z",
+    })
+  ),
+  "Acccount"
+)`)
+        ),
+
+        p("Create a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment" }, "DocumentFragment"), " using the ", code("fragment"), " function:"),
+
+        strong("⚠️ DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted. ⚠️"),
+
+        p("In addition to ", code("String"), ", ", code("Number"), ", and ", code("Boolean"), " types, attributes can accept ", code("Date"), ", ", code("Array"), " and ", code("Object"), " types as values by calling ", code("JSON.stringify"), " on them:"),
+        h3("JavaScript"),
+        pre(
+          code(`
+div({ dataModel: { type: "user", active: false } })`)
+        ),
+        h3("DOM"),
+        pre(
+          code(`
+<div data-model="{"type":"user","active":false}"></div>`)
+        ),
+        strong("ℹ️ Property values do not get stringified. Not recommended for large sets of data. ℹ️"),
+
+        p("While not a ", code("domxy"), " feature, if used inside of a JavaScript class, you can take advantage of inline object property assignment to 'define and assign' elements as references for later use:"),
+        pre(
+          code(`
+class HsCard extends BitElement {
+  static properties = {
+    "copy": { type: String, required: true },
+    "image": { type: String },
+    "link": { type: URL },
+    "title": { type: String, required: true },
+  }
+
+  constructor() {
+    super();
+    this.shadowRoot.append(
+      this.$image = img({ alt: "" }),
+      this.$title = h2(),
+      this.$copy = p("Default copy ",
+        this.$link = a("Card link")
+      ),
+    );
+  }
+
+  update() {
+    this.$copy.textContent = this.copy;
+    this.$image.src = this.image;
+    this.$link.href = this.link.href;
+    this.$title.textContent = this.title;
+  }
+}`)
+        ),
+
+        h2("Tests"),
+        ul(
+          li("Run `index.html` in a web browser"),
+          li("Open the Developer Tools and select the Console tab"),
+          li("If all tests passed, you should see `All tests passed!` or the error and line number in the console"),
+        ),
+
+        h2("License"),
+        p(code("domxy"), " is released under the ", a({ href: "https://unlicense.org" }, "The Unlicense"), "."),
+
+        h2("Changelog"),
+        p("Detailed changes for each release are documented in the ", a({ href: "" }, "release notes"), "."),
+
+        h2("Sponsorship"),
+        p("If you find `domxy` useful, please consider ", a({ href: "" }, "becoming a sponsor"), " .")
       );
 
       document.body.appendChild(app);
+
+
+      /* TESTS */
 
       // Test creating a div with dataset attributes
       const divElement = div({

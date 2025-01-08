@@ -35,7 +35,7 @@ export const domxy = new Proxy({}, {
     const kebabTag = /^[A-Z]/.test(tag) ? toKebabCase(tag) : tag;
 
     return (...args) => {
-      const isSvg = kebabTag === "svg" || isValidSvgTag(kebabTag);
+      const isSvg = kebabTag === "svg" || (kebabTag !== "a" && isValidSvgTag(kebabTag));
       const attributes = {};
       const properties = {};
       let children = [];
@@ -62,12 +62,8 @@ export const domxy = new Proxy({}, {
           }
         }
       }
-      children = args;
 
-      // Check if the tag is a valid HTML element, a valid SVG element, or a defined custom element
-      if (!isValidHtmlTag(kebabTag) && !isValidSvgTag(kebabTag) && !customElements.get(kebabTag) && kebabTag !== 'fragment') {
-        throw new Error(`Invalid tag: ${kebabTag}`);
-      }
+      children = args;
 
       // Create the element or fragment
       let element;
