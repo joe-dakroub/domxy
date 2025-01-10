@@ -1,4 +1,4 @@
-# domxy
+# [domxy](https://domxy.js.org)
 
 A simple and lightweight way to create HTML and SVG elements in JavaScript.
 
@@ -224,6 +224,10 @@ document.body.append(
   )
 )
 ```
+
+## Downloads
+- [domxy.js (3.3 KB)](https://domxy.js.org/domxy.js)
+- [domxy.min.js (1.3 KB)](https://domxy.js.org/domxy.min.js)
 
 ## Tests
 1. Run **tests.html** in a web browser
