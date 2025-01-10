@@ -1,12 +1,8 @@
 /**
- * Checks if a tag is a valid HTML tag.
- * @param {string} tag - The tag to check.
- * @returns {boolean} - True if the tag is valid, false otherwise.
+ * domxy.js
+ * A simple, lightweight, and modern way to create DOM/SVG elements.
+ * @autor Joe Dakroub <joe.dakroub@me.com>
  */
-const isValidHtmlTag = (tag) => {
-  return document.createElement(tag).toString() !==
-    "[object HTMLUnknownElement]";
-};
 
 /**
  * Checks if a tag is a valid SVG tag.
@@ -55,6 +51,8 @@ export const domxy = new Proxy({}, {
             for (const [ariaKey, ariaValue] of Object.entries(value)) {
               attributes[`aria-${toKebabCase(ariaKey)}`] = ariaValue;
             }
+          } else if (key === "viewBox") {
+            attributes[key] = value; // Keep viewBox camelCased
           } else if (key in document.createElement("div")) {
             properties[key] = value;
           } else {

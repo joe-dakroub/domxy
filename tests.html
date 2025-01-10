@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Domxy Tests</title>
+  <script type="module">
+    import { domxy } from "/domxy.js";
+
+    // Test creating a div with dataset attributes
+    const divElement = div({
+      dataset: { controller: "hello" },
+      class: "form-group",
+    });
+    console.assert(
+      divElement.tagName === "DIV",
+      "Expected tag name to be DIV",
+    );
+    console.assert(
+      divElement.dataset.controller === "hello",
+      "Expected dataset controller to be hello",
+    );
+    console.assert(
+      divElement.className === "form-group",
+      "Expected class to be form-group",
+    );
+
+    // Test creating an input with dataset attributes
+    const inputElement = input({
+      dataset: { helloTarget: "name" },
+      id: "name",
+      name: "name",
+      placeholder: "enter a name",
+      type: "text",
+    });
+    console.assert(
+      inputElement.tagName === "INPUT",
+      "Expected tag name to be INPUT",
+    );
+    console.assert(
+      inputElement.dataset.helloTarget === "name",
+      "Expected dataset helloTarget to be name",
+    );
+    console.assert(
+      inputElement.id === "name",
+      "Expected id to be name",
+    );
+    console.assert(
+      inputElement.name === "name",
+      "Expected name to be name",
+    );
+    console.assert(
+      inputElement.placeholder === "enter a name",
+      "Expected placeholder to be enter a name",
+    );
+    console.assert(
+      inputElement.type === "text",
+      "Expected type to be text",
+    );
+
+    // Test creating a span with aria attributes
+    const spanElement = span({
+      aria: { labelledby: "tac" },
+      ariaChecked: false,
+      role: "checkbox",
+      tabindex: 0,
+    });
+    console.assert(
+      spanElement.tagName === "SPAN",
+      "Expected tag name to be SPAN",
+    );
+    console.assert(
+      spanElement.getAttribute("aria-labelledby") === "tac",
+      "Expected aria-labelledby to be tac",
+    );
+    console.assert(
+      spanElement.getAttribute("aria-checked") === "false",
+      "Expected aria-checked to be false",
+    );
+    console.assert(
+      spanElement.getAttribute("role") === "checkbox",
+      "Expected role to be checkbox",
+    );
+    console.assert(
+      spanElement.tabIndex === 0,
+      "Expected tabindex to be 0",
+    );
+
+    // Test creating a span with id
+    const spanWithIdElement = span(
+      { id: "tac" },
+      "I agree to the Terms and Conditions.",
+    );
+    console.assert(
+      spanWithIdElement.tagName === "SPAN",
+      "Expected tag name to be SPAN",
+    );
+    console.assert(
+      spanWithIdElement.id === "tac",
+      "Expected id to be tac",
+    );
+    console.assert(
+      spanWithIdElement.textContent ===
+        "I agree to the Terms and Conditions.",
+      "Expected text content to be I agree to the Terms and Conditions.",
+    );
+
+    // Test creating a custom element
+    const customElement = SlButton({
+      dataset: { action: "click->hello#greet" },
+    }, "Submit");
+    console.assert(
+      customElement.tagName === "SL-BUTTON",
+      "Expected tag name to be SL-BUTTON",
+    );
+    console.assert(
+      customElement.dataset.action === "click->hello#greet",
+      "Expected dataset action to be click->hello#greet",
+    );
+    console.assert(
+      customElement.textContent === "Submit",
+      "Expected text content to be Submit",
+    );
+
+    // Test setting JSON values for attributes
+    const divWithJsonAttributes = div({
+      dataset: { info: { name: "test", value: 123 } },
+      aria: { details: { description: "example" } },
+    });
+    console.assert(
+      divWithJsonAttributes.tagName === "DIV",
+      "Expected tag name to be DIV",
+    );
+    console.assert(
+      divWithJsonAttributes.getAttribute("data-info") ===
+        '{"name":"test","value":123}',
+      "Expected data-info to be JSON string",
+    );
+    console.assert(
+      divWithJsonAttributes.getAttribute("aria-details") ===
+        '{"description":"example"}',
+      "Expected aria-details to be JSON string",
+    );
+
+    // Test setting JSON values for properties
+    const inputWithJsonProperties = input({
+      value: { text: "example", number: 456 },
+    });
+    console.assert(
+      inputWithJsonProperties.tagName === "INPUT",
+      "Expected tag name to be INPUT",
+    );
+    console.assert(
+      inputWithJsonProperties.value ===
+        '{"text":"example","number":456}',
+      "Expected value to be JSON string",
+    );
+
+    // Test creating a document fragment
+    const fragmentElement = fragment(
+      div({}, "First child"),
+      span({}, "Second child"),
+    );
+    console.assert(
+      fragmentElement instanceof DocumentFragment,
+      "Expected fragmentElement to be a DocumentFragment",
+    );
+    console.assert(
+      fragmentElement.childNodes.length === 2,
+      "Expected fragment to have 2 children",
+    );
+    console.assert(
+      fragmentElement.childNodes[0].tagName === "DIV",
+      "Expected first child to be DIV",
+    );
+    console.assert(
+      fragmentElement.childNodes[1].tagName === "SPAN",
+      "Expected second child to be SPAN",
+    );
+
+    // Test creating a fragment with attributes (should log a warning)
+    const originalWarn = console.warn;
+    let warnMessage = "";
+    console.warn = (message) => {
+      warnMessage = message;
+    };
+
+    const fragmentWithAttributes = fragment(
+      { id: "test-fragment" },
+      div({}, "Child"),
+    );
+
+    console.assert(
+      warnMessage ===
+        "Warning: Fragments do not support attributes or properties.",
+      "Expected warning message for fragment with attributes",
+    );
+    console.warn = originalWarn;
+
+    console.log("All tests passed!");
+  </script>
+</head>
+<body>
+</body>
+</html>

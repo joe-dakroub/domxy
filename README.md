@@ -1,6 +1,7 @@
-# DOMXY
+# domxy
 
-[domxy](https://domxy.js.org) is a tiny library that makes creating HTML and SVG elements in JavaScript expressive and enjoyable without the need for a build tool.
+A simple and lightweight way to create HTML and SVG elements in JavaScript.
+
 
 ## Example
 
@@ -48,30 +49,26 @@ document.body.append(nameForm)
 ```
 
 ## Features
-- ✅ Create HTML and SVG elements expressively and natively
+- ✨ Create HTML and SVG elements expressively and natively
 - ☕ Pure JavaScript, no special syntax to learn
-- 📟 Every element is simple a function call
-- 🪪 Optionally pass attributes, properties and `data-*` as an object
+- 🤙 Every element is simple a function call
+- 🪪 Optionally pass attributes, properties, `data` and `aria` as an object
 - ⚡ Supports Custom Elements with Pascal-cased names for easy identification
 - 🚫 No need for a build tool
+- 📦 Standard ES Module
 
-## Why?
-Whether you need to or enjoy working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get.
+## Overview
+**domxy** is a tiny [JavaScript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that generates elements based on the name of the function being called.
 
-`domxy` makes working with DOM nodes as easy and enjoyable as other alternative syntaxes that require build tools, but requires little time to learn and very little overhead to run.
-
-## Details
-`domxy` is a tiny [JavaScript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that generates DOM elements based on the name of the function being called.
-
-You must destructure the element names you want to use out of the `domxy` object before using:
+You must [destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) the element names from the **domxy** object before using:
 
 ```js
 const { div, form, input, label, SlButton } = domxy
 ```
 
-It is usually easiest to markup the DOM tree first using whatever element functions you need, and then come back and destructure the used elements after. [Copilot](https://copilot.microsoft.com) can help with this.
+It is usually easiest to markup the DOM tree first using whatever elements you need, and then come back and destructure the used elements after. [Copilot](https://github.com/features/copilot) can help with this.
 
-**🚨 An error will be thrown if you try to access an element function without it being declared first 🚨**
+**⚠️ An error will be thrown if you try to access an element function without it being declared first.**
 
 Custom Element instances can be created using Pascal case:
 
@@ -160,9 +157,9 @@ fragment(
 <p>Intro paragraph.</p>
 ```
 
-**⚠️ DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted. ⚠️**
+**⚠️ DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted.**
 
-In addition to `String`, `Number` and `Boolean` types, attributes can accept `Date`, `Array` and `Object` types as values by calling `JSON.stringify` on them:
+In addition to `String`, `Number` and `Boolean` types, attributes can accept `Date`, `Array` and `Object` types as values by calling [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) on them:
 
 
 ### JavaScript
@@ -175,9 +172,9 @@ div({ dataModel: { type: "user", active: false } })
 <div data-model="{"type":"user","active":false}"></div>
 ```
 
-**ℹ️ Property values do not get stringified. Not recommended for large sets of data. ℹ️**
+**⚠️ Property values do not get stringified. Not recommended for large sets of data.**
 
-While not a `domxy` feature, if used inside of a JavaScript class, you can take advantage of inline object property assignment to "define and assign" elements as references for later use:
+While not a **domxy** feature, if used inside of a JavaScript class, you can take advantage of inline property assignment to "define and assign" elements as references for later use:
 
 ```js
 class HsCard extends BitElement {
@@ -208,16 +205,36 @@ class HsCard extends BitElement {
 }
 ```
 
+## Why?
+Whether you need to or enjoy working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get.
+
+**domxy** makes working with DOM nodes easy, expressive and powerful.
+
+## Installation
+Import **domxy** as an ES module:
+
+```js
+import { domxy } from "https://domxy.js.org/domxy.js"
+
+const { h1, main } = domxy
+
+document.body.append(
+  main(
+    h1("Hello, domxy.")
+  )
+)
+```
+
 ## Tests
-1. Run `index.html` in a web browser
+1. Run **tests.html** in a web browser
 2. Open the Developer Tools and select the Console tab
-3. If all tests passed, you should see `All tests passed!` or the error and line number in the console
+3. **All tests passed!** or the error and line number will display in the console
 
 ## License
-`domxy` is released under [The Unlicense](https://unlicense.org/).
+**domxy** was created by [Joe Dakroub](https://github.com/joe-dakroub) and is released under the [Unlicense](https://unlicense.org/).
 
 ## Changelog
 Detailed changes for each release are documented in the [release notes]().
 
 ## Sponsorship
-If you find `domxy` useful, please consider [becoming a sponsor]().
+If you find **domxy** useful, please consider [becoming a sponsor]().

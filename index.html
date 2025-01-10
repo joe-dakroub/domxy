@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Domxy - Elegant HTML and SVG elements in JavaScript</title>
+    <title>Domxy - Elegant DOM creation</title>
     <script type="module">
       import { domxy } from "/domxy.js";
-      import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js";
 
       const {
         a,
@@ -24,27 +23,319 @@
         label,
         legend,
         li,
+        link,
         main,
+        ol,
         p,
+        path,
         pre,
+        script,
         span,
         strong,
+        style,
+        svg,
+        u,
         ul,
-        SlButton,
       } = domxy;
 
-      const app = main(
-        h1({ class: "title", id: "title" }, "DOMXY"),
-        p(
-          a({ href: "https://domxy.js.org" }, "domxy"),
-          " is a tiny library that makes creating HTML and SVG elements in JavaScript expressive and enjoyable without the need for a build tool.",
-        ),
+      const head = fragment(
+        style(`
+          @font-face {
+            font-family: "Label";
+            src: url("/glyphicons-label-bold.woff2") format("woff2");
+          }
 
-        h2("Example"),
-        h3("JavaScript"),
-        pre(
-          code(
-            `// Shoelace SlButton component
+          :root {
+            box-sizing: border-box;
+            line-height: 1.4;
+            /* Prevent text size adjustments in WebKit and Gecko browsers */
+            -moz-text-size-adjust: none;
+            -webkit-text-size-adjust: none;
+            text-size-adjust: none;
+          }
+
+          *,
+          *::before,
+          *::after {
+            box-sizing: inherit;
+          }
+
+          a {
+            color: currentColor;
+            font-weight: bold;
+            text-underline-offset: 0.25rem;
+            text-decoration-thickness: 0.125rem;
+          }
+
+          a:focus {
+            outline: 2px solid currentColor;
+            outline-offset: 0.25rem;
+          }
+
+          body {
+            background-color: aquamarine;
+            font-family: monospace-ui, monospace;
+            margin: 0 auto;
+            max-width: 80ch;
+            padding: 0;
+          }
+
+          code {
+            background-color: white;
+            border: 0.125rem solid black;
+            border-radius: 0.25rem;
+            box-shadow:
+              1px 1px 0 0 black,
+              2px 2px 0 0 black;
+            font-weight: bold;
+            padding: 0.125rem 0.25rem;
+          }
+
+          h1, h2 {
+            font-family: "Label", sans-serif;
+            margin-bottom: 1rem;
+          }
+
+          h1 {
+            font-size: 2.5rem;
+          }
+
+          h2 {
+            border-bottom: 0.25rem solid currentColor;
+            font-size: 1.875rem;
+            padding-bottom: 0.125rem;
+          }
+
+          h3 {
+            font-size: 1.25rem;
+          }
+
+          li {
+            margin-bottom: 1rem;
+          }
+
+          main {
+            padding: 1rem;
+          }
+
+          p {
+            line-height: 2;
+            margin-bottom: 1.5rem;
+          }
+
+          pre {
+            background-color: black;
+            border: 0.25rem solid black;
+            border-radius: 0.666rem;
+            box-shadow:
+              1px 1px 0 0 black,
+              2px 2px 0 0 black,
+              3px 3px 0 0 black,
+              4px 4px 0 0 black;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            overflow: auto;
+            padding: 0.5rem;
+            white-space: pre-wrap;
+          }
+
+          strong {
+            font-weight: bold;
+          }
+
+          strong.alert {
+            background-color: yellow;
+            border: 0.25rem solid black;
+            border-radius: 0.666rem;
+            box-shadow:
+              1px 1px 0 0 black,
+              2px 2px 0 0 black,
+              3px 3px 0 0 black,
+              4px 4px 0 0 black;
+            display: block;
+            margin: 1.5rem 0;
+            padding: 1rem;
+          }
+
+          ol, ul {
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+          }
+
+          u {
+            text-decoration-style: double;
+            text-decoration-thickness: 0.125rem;
+            text-underline-offset: 0.25rem;
+          }
+
+          .logo-icon {
+            height: 3rem;
+            width: 3rem;
+          }
+
+          [class*=shj-lang-] {
+            color: whitesmoke;
+            margin: 1rem 0 2rem 0;
+            max-width: min(100%,100vw);
+            white-space: pre;
+          }
+
+          .shj-inline {
+            border-radius: 0.25rem;
+            display: inline-block;
+            margin: 0;
+            padding: 0.125rem 0.25rem;
+          }
+
+          [class*=shj-lang-]::selection {
+            background: slategray;
+          }
+
+          [class*=shj-lang-] ::selection {
+            background: slategray;
+          }
+
+          [class*=shj-lang-] > div {
+            display: flex;
+            overflow: auto;
+          }
+
+          [class*=shj-lang-] >div :last-child {
+            flex: 1;
+            outline: none;
+          }
+
+          .shj-numbers {
+            counter-reset: line;
+            padding-left: 0.25rem;
+          }
+
+          .shj-numbers div {
+            padding-right: 5px
+          }
+
+          .shj-numbers div:before {
+            color: #999;
+            content: counter(line);
+            text-align: right;
+            counter-increment: line;
+            margin-right: 0.25rem;
+            display: block;
+          }
+
+          .shj-syn-cmnt {
+            font-style: italic;
+          }
+
+          .shj-syn-err,
+          .shj-syn-kwd {
+            color: tomato;
+          }
+
+          .shj-syn-num,
+          .shj-syn-class {
+            color: #f60;
+          }
+
+          .shj-syn-insert,
+          .shj-syn-str {
+            color: #7d8;
+          }
+
+          .shj-syn-type,
+          .shj-syn-oper {
+            color:# 5af;
+          }
+
+          .shj-syn-section,
+          .shj-syn-func {
+            color: #84f;
+          }
+
+          .shj-syn-deleted,
+          .shj-syn-var {
+            color: tomato;
+          }
+
+          .shj-oneline {
+            padding: 0.75rem;
+          }
+
+          .shj-lang-http.shj-oneline .shj-syn-kwd {
+            color: #fff;
+            background: blue;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.375rem;
+          }
+
+          [class*=shj-lang-]{
+            color: silver;
+          }
+
+          [class*=shj-lang-]:before {
+            color: #6f9aff;
+          }
+
+          .shj-syn-insert {
+            color: #98c379;
+          }
+
+          .shj-syn-var {
+            color: orange;
+          }
+
+          .shj-syn-oper {
+            color: whitesmoke;
+          }
+
+          .shj-syn-num,
+          .shj-syn-kwd {
+            color: cyan;
+          }
+
+          .shj-syn-section,
+          .shj-syn-type,
+          .shj-syn-class {
+            color: orange;
+          }
+
+          .shj-numbers,
+          .shj-syn-cmnt {
+            color: lavender;
+          }
+
+          .shj-syn-bool {
+            color: lawngreen;
+          }
+
+          .shj-syn-deleted,
+          .shj-syn-err,
+          .shj-syn-str {
+            color: hotpink;
+          }
+
+          .shj-syn-func {
+            color: yellow;
+          }
+        `),
+      );
+
+      const page = fragment(
+        main(
+          h1({ class: "title", id: "title" },
+            span({ ariaHidden: true },
+              "</>",
+              span({ style: "opacity: 0.5;" }, ">"),
+              span({ style: "opacity: 0.25;" }, ">"),
+            ),
+            " domxy"
+          ),
+          p("A simple and lightweight way to create HTML and SVG elements in JavaScript."),
+
+          h2("Example"),
+          h3("JavaScript"),
+          pre({ class: "shj-lang-js" },
+            code(`// Shoelace SlButton component
 import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js"
 
 // Domxy library
@@ -72,77 +363,66 @@ const nameForm = form({ dataController: "hello" } },
 
 // Append to the DOM
 document.body.append(nameForm)`,
+            ),
           ),
-        ),
-        h3("DOM"),
-        pre(
-          code(
-            `
-<form action="#" data-controller="hello">
+          h3("DOM"),
+          pre({ class: "shj-lang-html" },
+            code(`<form data-controller="hello">
   <div class="form-group">
     <label for="name">Name</label>
     <input data-hello-target="name" id="name" name="name" placeholder="enter a name" type="text">
   </div>
   <sl-button data-action="click->hello#greet">Submit</sl-button>
-</form>
-`,
+</form>`,
+            ),
           ),
-        ),
 
-        h2("Features"),
-        ul(
-          li("✅ Create HTML and SVG elements expressively and natively"),
-          li("☕ Pure JavaScript, no special syntax to learn"),
-          li("📟 Every element is simple a function call"),
-          li("🪪 Optionally pass attributes, properties and `data-*` as an object"),
-          li("⚡ Supports Custom Elements with Pascal-cased names for easy identification"),
-          li("🚫 No need for a build tool"),
-        ),
-
-        h2("Why?"),
-        p("Whether you need to or enjoy working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get."),
-        p(code("domxy"), " makes working with DOM nodes as easy and enjoyable as other alternative syntaxes that require build tools, but requires little time to learn and very little overhead to run."),
-
-        h2("Details"),
-        p(code("domxy"), " is a tiny ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" }, "JavaScript Proxy"), " object that generates DOM elements based on the name of the function being called."),
-        p("You must destructure the element names you want to use out of the domxy object before using:"),
-        pre(
-          code(
-            `const { div, form, input, label, SlButton } = domxy`,
+          h2("Features"),
+          ul(
+            li("✨ Create HTML and SVG DOM elements expressively and natively"),
+            li("☕ Pure JavaScript, no special syntax to learn"),
+            li("🤙 Every element is simple a function call"),
+            li("🪪 Optionally pass attributes, properties, ", code("data"), " and ", code("aria"), " as an object"),
+            li("⚡ Supports Custom Elements with Pascal-cased names for easy identification"),
+            li("🚫 No need for a build tool"),
+            li("📦 Standard ES Module"),
           ),
-        ),
-        p("It is usually easiest to markup the DOM tree first using whatever element functions you need, and then come back and destructure the used elements after. ", a({ href: "https://copilot.microsoft.com" }, "Copilot"), " can help with this."),
-        strong("🚨 An error will be thrown if you try to access an element function without it being declared first 🚨"),
 
-        p("Custom Element instances can be created using Pascal case:"),
-        pre(
-          code(
-            `
-form(
+          h2("Overview"),
+          p(strong("domxy"), " is a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" }, "JavaScript Proxy"), " object that generates elements based on the name of the function being called."),
+          p("You must ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" }, "destructure"), " the element names from the ", strong("domxy"), " object before using:"),
+          pre({ class: "shj-lang-js" },
+            code(
+              `const { div, form, input, label, SlButton } = domxy`,
+            ),
+          ),
+          p("It is usually easiest to markup the DOM tree first using whatever elements you need, and then come back and destructure the used elements after. ", a({ href: "https://github.com/features/copilot" }, "Copilot"), " can help with this."),
+          strong({ class: "alert" }, "An error will be thrown if you try to access an element function without it being declared first."),
+
+          p("Custom Element instances can be created using Pascal case:"),
+          pre({ class: "shj-lang-js" },
+            code(`form(
   SlInput({ variant: "danger" }), // sl-input
   SlButton({ type: "submit" }, "Submit") // sl-button
 )`,
+            ),
           ),
-        ),
 
-        p(a({ href: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes" }, "Data attributes"), " can be assigned using Camel case names or the ", code("dataset"), " property:"),
-        h3("JavaScript"),
-        pre(
-          code(`
-span({ aria: { labelledby: "tac", }, ariaChecked: true, role: "checkbox", tabindex: 0 }),
+          p(a({ href: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes" }, "Data attributes"), " can be assigned using Camel case names or the ", code("dataset"), " property:"),
+          h3("JavaScript"),
+          pre({ class: "shj-lang-js" },
+            code(`span({ aria: { labelledby: "tac", }, ariaChecked: true, role: "checkbox", tabindex: 0 }),
 span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
-        ),
-        h3("DOM"),
-        pre(
-          code(`
-<span aria-checked="false" aria-labelledby="tac" role="checkbox" tabindex="0"></span>
+          ),
+          h3("DOM"),
+          pre({ class: "shj-lang-html" },
+            code(`<span aria-checked="false" aria-labelledby="tac" role="checkbox" tabindex="0"></span>
 <span id="tac">I agree to the Terms and Conditions.</span>`)
-        ),
+          ),
 
-        p("Create SVG elements just like any other HTML element:"),
-        pre(
-          code(`
-button({ type: "button" },
+          p("Create SVG elements just like any other HTML element:"),
+          pre({ class: "shj-lang-js" },
+            code(`button({ type: "button" },
   svg({ ariaHidden: true, class: "icon", viewBox: "0 0 20 20" },
     path({
       d: "M17,15.98059V17a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V15.98059a.9998.9998,0,0,1,.37531-.78082l2.556-2.0448A4.00431,4.00431,0,0,0,9.2998,15h1.4004a4.00431,4.00431,0,0,0,3.36853-1.845l2.556,2.0448A.9998.9998,0,0,1,17,15.98059ZM7.47211,11.81226A2,2,0,0,0,9.29974,13h1.40052a2,2,0,0,0,1.82763-1.18774L13.65527,9.2757A4.00024,4.00024,0,0,0,14,7.65112V6a3.97577,3.97577,0,0,0-4-4A4.1928,4.1928,0,0,0,6,6.17206V7.65112A4.00024,4.00024,0,0,0,6.34473,9.2757Z",
@@ -150,29 +430,39 @@ button({ type: "button" },
   ),
   "Acccount"
 )`)
-        ),
+          ),
 
-        p("Create a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment" }, "DocumentFragment"), " using the ", code("fragment"), " function:"),
+          p("Create a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment" }, "DocumentFragment"), " using the ", code("fragment"), " function:"),
 
-        strong("⚠️ DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted. ⚠️"),
+          h3("JavaScript"),
+          pre({ class: "shj-lang-js" },
+            code(`fragment(
+  h1("Title"),
+  p("Intro paragraph.")
+)`),
+          ),
+          h3("DOM"),
+          pre({ class: "shj-lang-html" },
+            code(`#document-fragment
+<h1>Title</h1>
+<p>Intro paragraph.</p>`),
+          ),
+          strong({ class: "alert" }, "DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted."),
 
-        p("In addition to ", code("String"), ", ", code("Number"), ", and ", code("Boolean"), " types, attributes can accept ", code("Date"), ", ", code("Array"), " and ", code("Object"), " types as values by calling ", code("JSON.stringify"), " on them:"),
-        h3("JavaScript"),
-        pre(
-          code(`
-div({ dataModel: { type: "user", active: false } })`)
-        ),
-        h3("DOM"),
-        pre(
-          code(`
-<div data-model="{"type":"user","active":false}"></div>`)
-        ),
-        strong("ℹ️ Property values do not get stringified. Not recommended for large sets of data. ℹ️"),
+          p("In addition to ", code("String"), ", ", code("Number"), ", and ", code("Boolean"), " types, attributes can accept ", code("Date"), ", ", code("Array"), " and ", code("Object"), " types as values by calling ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" }, "JSON.stringify()"), " on them:"),
+          h3("JavaScript"),
+          pre({ class: "shj-lang-js" },
+            code(`div({ dataModel: { type: "user", active: false } })`)
+          ),
+          h3("DOM"),
+          pre({ class: "shj-lang-html" },
+            code(`<div data-model='{"type":"user","active":false}'></div>`)
+          ),
+          strong({ class: "alert" }, "Property values do not get stringified. Not recommended for large sets of data."),
 
-        p("While not a ", code("domxy"), " feature, if used inside of a JavaScript class, you can take advantage of inline object property assignment to 'define and assign' elements as references for later use:"),
-        pre(
-          code(`
-class HsCard extends BitElement {
+          p("While not a ", strong("domxy"), " feature, if used inside of a JavaScript class, you can take advantage of inline property assignment to 'define and assign' elements as references for later use:"),
+          pre({ class: "shj-lang-js" },
+            code(`class HsCard extends BitElement {
   static properties = {
     "copy": { type: String, required: true },
     "image": { type: String },
@@ -188,231 +478,76 @@ class HsCard extends BitElement {
       this.$copy = p("Default copy ",
         this.$link = a("Card link")
       ),
-    );
+    )
   }
 
   update() {
-    this.$copy.textContent = this.copy;
-    this.$image.src = this.image;
-    this.$link.href = this.link.href;
-    this.$title.textContent = this.title;
+    this.$copy.textContent = this.copy
+    this.$image.src = this.image
+    this.$link.href = this.link.href
+    this.$title.textContent = this.title
   }
 }`)
+          ),
+
+          h2("Why?"),
+          p("Whether you ", u("need to"), " or ", u("enjoy"), " working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get."),
+          p(strong("domxy"), " makes working with DOM nodes easy, expressive and powerful by using regular JavaScript functions as HTML, SVG, and DocumentFragment node names."),
+          p("Create DOM nodes as easy as writing HTML."),
+
+          h2("Installation"),
+          p("Import ", strong("domxy"), " as an ES module:"),
+          pre({ class: "shj-lang-js" },
+            code(`import { domxy } from "https://domxy.js.org/domxy.js"
+
+const { h1, main } = domxy
+
+document.body.append(
+  main(
+    h1("Hello, domxy.")
+  )
+)
+`)
+          ),
+
+          h2("Downloads"),
+          ul(
+            li(
+              a({ href: "/domxy.js" }, "domxy.js (3.3 KB)"),
+            ),
+            li(
+              a({ href: "/domxy.min.js" }, "domxy.min.js (1.3 KB)"),
+            )
+          ),
+
+          h2("Source Code"),
+          a({ href: "https://github.com/joe-dakroub/domxy" }, "Github Repository"),
+
+          h2("Tests"),
+          ol(
+            li("Run ", strong("tests.html"), " in a web browser"),
+            li("Open the Developer Tools and select the Console tab"),
+            li(strong("All tests passed!"), " or the error and line number will display in the console"),
+          ),
+
+          h2("License"),
+          p(strong("domxy"), " was created by ", a({ href: "https://github.com/joe-dakroub" }, "Joe Dakroub"), " and is released under the ", a({ href: "https://unlicense.org" }, "Unlicense"), "."),
+
+          h2("Changelog"),
+          p("Detailed changes for each release are documented in the ", a({ href: "" }, "release notes"), "."),
+
+          h2("Sponsorship"),
+          p("If you find ", strong("domxy"), " useful, please consider ", a({ href: "" }, "becoming a sponsor"), ".")
         ),
 
-        h2("Tests"),
-        ul(
-          li("Run `index.html` in a web browser"),
-          li("Open the Developer Tools and select the Console tab"),
-          li("If all tests passed, you should see `All tests passed!` or the error and line number in the console"),
-        ),
-
-        h2("License"),
-        p(code("domxy"), " is released under the ", a({ href: "https://unlicense.org" }, "The Unlicense"), "."),
-
-        h2("Changelog"),
-        p("Detailed changes for each release are documented in the ", a({ href: "" }, "release notes"), "."),
-
-        h2("Sponsorship"),
-        p("If you find `domxy` useful, please consider ", a({ href: "" }, "becoming a sponsor"), " .")
+        script({ type: "module"}, `
+          import { highlightAll } from "/speed-highlight.js";
+          highlightAll();
+        `),
       );
 
-      document.body.appendChild(app);
-
-
-      /* TESTS */
-
-      // Test creating a div with dataset attributes
-      const divElement = div({
-        dataset: { controller: "hello" },
-        class: "form-group",
-      });
-      console.assert(
-        divElement.tagName === "DIV",
-        "Expected tag name to be DIV",
-      );
-      console.assert(
-        divElement.dataset.controller === "hello",
-        "Expected dataset controller to be hello",
-      );
-      console.assert(
-        divElement.className === "form-group",
-        "Expected class to be form-group",
-      );
-
-      // Test creating an input with dataset attributes
-      const inputElement = input({
-        dataset: { helloTarget: "name" },
-        id: "name",
-        name: "name",
-        placeholder: "enter a name",
-        type: "text",
-      });
-      console.assert(
-        inputElement.tagName === "INPUT",
-        "Expected tag name to be INPUT",
-      );
-      console.assert(
-        inputElement.dataset.helloTarget === "name",
-        "Expected dataset helloTarget to be name",
-      );
-      console.assert(
-        inputElement.id === "name",
-        "Expected id to be name",
-      );
-      console.assert(
-        inputElement.name === "name",
-        "Expected name to be name",
-      );
-      console.assert(
-        inputElement.placeholder === "enter a name",
-        "Expected placeholder to be enter a name",
-      );
-      console.assert(
-        inputElement.type === "text",
-        "Expected type to be text",
-      );
-
-      // Test creating a span with aria attributes
-      const spanElement = span({
-        aria: { labelledby: "tac" },
-        ariaChecked: false,
-        role: "checkbox",
-        tabindex: 0,
-      });
-      console.assert(
-        spanElement.tagName === "SPAN",
-        "Expected tag name to be SPAN",
-      );
-      console.assert(
-        spanElement.getAttribute("aria-labelledby") === "tac",
-        "Expected aria-labelledby to be tac",
-      );
-      console.assert(
-        spanElement.getAttribute("aria-checked") === "false",
-        "Expected aria-checked to be false",
-      );
-      console.assert(
-        spanElement.getAttribute("role") === "checkbox",
-        "Expected role to be checkbox",
-      );
-      console.assert(
-        spanElement.tabIndex === 0,
-        "Expected tabindex to be 0",
-      );
-
-      // Test creating a span with id
-      const spanWithIdElement = span(
-        { id: "tac" },
-        "I agree to the Terms and Conditions.",
-      );
-      console.assert(
-        spanWithIdElement.tagName === "SPAN",
-        "Expected tag name to be SPAN",
-      );
-      console.assert(
-        spanWithIdElement.id === "tac",
-        "Expected id to be tac",
-      );
-      console.assert(
-        spanWithIdElement.textContent ===
-          "I agree to the Terms and Conditions.",
-        "Expected text content to be I agree to the Terms and Conditions.",
-      );
-
-      // Test creating a custom element
-      const customElement = SlButton({
-        dataset: { action: "click->hello#greet" },
-      }, "Submit");
-      console.assert(
-        customElement.tagName === "SL-BUTTON",
-        "Expected tag name to be SL-BUTTON",
-      );
-      console.assert(
-        customElement.dataset.action === "click->hello#greet",
-        "Expected dataset action to be click->hello#greet",
-      );
-      console.assert(
-        customElement.textContent === "Submit",
-        "Expected text content to be Submit",
-      );
-
-      // Test setting JSON values for attributes
-      const divWithJsonAttributes = div({
-        dataset: { info: { name: "test", value: 123 } },
-        aria: { details: { description: "example" } },
-      });
-      console.assert(
-        divWithJsonAttributes.tagName === "DIV",
-        "Expected tag name to be DIV",
-      );
-      console.assert(
-        divWithJsonAttributes.getAttribute("data-info") ===
-          '{"name":"test","value":123}',
-        "Expected data-info to be JSON string",
-      );
-      console.assert(
-        divWithJsonAttributes.getAttribute("aria-details") ===
-          '{"description":"example"}',
-        "Expected aria-details to be JSON string",
-      );
-
-      // Test setting JSON values for properties
-      const inputWithJsonProperties = input({
-        value: { text: "example", number: 456 },
-      });
-      console.assert(
-        inputWithJsonProperties.tagName === "INPUT",
-        "Expected tag name to be INPUT",
-      );
-      console.assert(
-        inputWithJsonProperties.value ===
-          '{"text":"example","number":456}',
-        "Expected value to be JSON string",
-      );
-
-      // Test creating a document fragment
-      const fragmentElement = fragment(
-        div({}, "First child"),
-        span({}, "Second child"),
-      );
-      console.assert(
-        fragmentElement instanceof DocumentFragment,
-        "Expected fragmentElement to be a DocumentFragment",
-      );
-      console.assert(
-        fragmentElement.childNodes.length === 2,
-        "Expected fragment to have 2 children",
-      );
-      console.assert(
-        fragmentElement.childNodes[0].tagName === "DIV",
-        "Expected first child to be DIV",
-      );
-      console.assert(
-        fragmentElement.childNodes[1].tagName === "SPAN",
-        "Expected second child to be SPAN",
-      );
-
-      // Test creating a fragment with attributes (should log a warning)
-      const originalWarn = console.warn;
-      let warnMessage = "";
-      console.warn = (message) => {
-        warnMessage = message;
-      };
-
-      const fragmentWithAttributes = fragment(
-        { id: "test-fragment" },
-        div({}, "Child"),
-      );
-
-      console.assert(
-        warnMessage ===
-          "Warning: Fragments do not support attributes or properties.",
-        "Expected warning message for fragment with attributes",
-      );
-      console.warn = originalWarn;
-
-      console.log("All tests passed!");
+      document.head.append(head);
+      document.body.append(page);
     </script>
   </head>
   <body></body>
