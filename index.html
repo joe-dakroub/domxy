@@ -130,7 +130,7 @@
           }
 
           pre {
-            background-color: black;
+            background-color: white;
             border: 0.25rem solid black;
             border-radius: 0.666rem;
             box-shadow:
@@ -149,7 +149,7 @@
             font-weight: bold;
           }
 
-          strong.alert {
+          .alert {
             background-color: yellow;
             border: 0.25rem solid black;
             border-radius: 0.666rem;
@@ -180,7 +180,6 @@
           }
 
           [class*=shj-lang-] {
-            color: whitesmoke;
             margin: 1rem 0 2rem 0;
             max-width: min(100%,100vw);
             white-space: pre;
@@ -194,11 +193,11 @@
           }
 
           [class*=shj-lang-]::selection {
-            background: slategray;
+            background: aquamarine;
           }
 
           [class*=shj-lang-] ::selection {
-            background: slategray;
+            background: aquamarine;
           }
 
           [class*=shj-lang-] > div {
@@ -217,45 +216,20 @@
           }
 
           .shj-numbers div {
-            padding-right: 5px
+            padding-right: 0.25rem;
           }
 
           .shj-numbers div:before {
-            color: #999;
+            color: gray;
             content: counter(line);
             text-align: right;
             counter-increment: line;
-            margin-right: 0.25rem;
+            margin-right: 0.5rem;
             display: block;
           }
 
           .shj-syn-cmnt {
             font-style: italic;
-          }
-
-          .shj-syn-err,
-          .shj-syn-kwd {
-            color: tomato;
-          }
-
-          .shj-syn-num,
-          .shj-syn-class {
-            color: #f60;
-          }
-
-          .shj-syn-insert,
-          .shj-syn-str {
-            color: #7d8;
-          }
-
-          .shj-syn-type,
-          .shj-syn-oper {
-            color:# 5af;
-          }
-
-          .shj-syn-section,
-          .shj-syn-func {
-            color: #84f;
           }
 
           .shj-syn-deleted,
@@ -274,54 +248,40 @@
             padding: 0.25rem 0.375rem;
           }
 
-          [class*=shj-lang-]{
-            color: silver;
-          }
-
           [class*=shj-lang-]:before {
-            color: #6f9aff;
+            color: red;
           }
 
           .shj-syn-insert {
-            color: #98c379;
+            color: red;
           }
 
-          .shj-syn-var {
-            color: orange;
-          }
-
-          .shj-syn-oper {
-            color: whitesmoke;
-          }
-
+          .shj-syn-bool,
+          .shj-syn-deleted,
+          .shj-syn-err,
+          .shj-syn-kwd,
           .shj-syn-num,
-          .shj-syn-kwd {
-            color: cyan;
+          .shj-syn-var {
+            color: darkgreen;
+            font-weight: bold;
           }
 
           .shj-syn-section,
           .shj-syn-type,
-          .shj-syn-class {
-            color: orange;
-          }
-
-          .shj-numbers,
-          .shj-syn-cmnt {
-            color: lavender;
-          }
-
-          .shj-syn-bool {
-            color: lawngreen;
-          }
-
-          .shj-syn-deleted,
-          .shj-syn-err,
-          .shj-syn-str {
-            color: hotpink;
-          }
-
+          .shj-syn-class,
           .shj-syn-func {
-            color: yellow;
+            color: rebeccapurple;
+            font-weight: bold;
+          }
+
+          .shj-syn-insert,
+          .shj-syn-str,
+          .shj-numbers {
+            color: dimgray;
+          }
+
+          .shj-syn-cmnt {
+            font-weight: bold;
           }
         `),
       );
@@ -470,31 +430,32 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
           pre({ class: "shj-lang-js" },
             code(`class HsCard extends BitElement {
   static properties = {
-    "copy": { type: String, required: true },
-    "image": { type: String },
-    "link": { type: URL },
-    "title": { type: String, required: true },
+    copy: { type: String, required: true },
+    image: { type: String },
+    link: { type: URL },
+    title: { type: String, required: true },
   }
 
   constructor() {
     super();
     this.shadowRoot.append(
-      this.$image = img({ alt: "" }),
-      this.$title = h2(),
-      this.$copy = p("Default copy ",
-        this.$link = a("Card link")
+      this.imageEl = img({ alt: "" }),
+      this.titleEl = h2(),
+      this.copyEl = p("Default copy ",
+        this.linkEl = a("Card link")
       ),
     )
   }
 
   update() {
-    this.$copy.textContent = this.copy
-    this.$image.src = this.image
-    this.$link.href = this.link.href
-    this.$title.textContent = this.title
+    this.copyEl.textContent = this.copy
+    this.imageEl.src = this.image
+    this.linkEl.href = this.link.href
+    this.titleEl.textContent = this.title
   }
 }`)
           ),
+          p("For more examples of how to use ", strong("domxy"), " in your projects, be sure ", strong("View Source"), " in your browser."),
 
           h2("Why?"),
           p("Whether you ", u("need to"), " or ", u("enjoy"), " working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get."),
