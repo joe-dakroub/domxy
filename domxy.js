@@ -1,5 +1,5 @@
 /**
- * domxy.js
+ * domxy - https://domxy.js.org
  * A simple, lightweight, and modern way to create DOM/SVG elements.
  * @autor Joe Dakroub <joe.dakroub@me.com>
  */
