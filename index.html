@@ -19,6 +19,7 @@
         h2,
         h3,
         hr,
+        i,
         input,
         label,
         legend,
@@ -108,6 +109,11 @@
 
           h3 {
             font-size: 1.25rem;
+          }
+
+          i {
+            font-family: sans-serif;
+            font-style: normal;
           }
 
           li {
@@ -379,13 +385,13 @@ document.body.append(nameForm)`,
 
           h2("Features"),
           ul(
-            li("✨ Create HTML and SVG DOM elements expressively and natively"),
-            li("☕ Pure JavaScript, no special syntax to learn"),
-            li("🤙 Every element is simple a function call"),
-            li("🪪 Optionally pass attributes, properties, ", code("data"), " and ", code("aria"), " as an object"),
-            li("⚡ Supports Custom Elements with Pascal-cased names for easy identification"),
-            li("🚫 No need for a build tool"),
-            li("📦 Standard ES Module"),
+            li(i("✨"), " Create HTML and SVG DOM elements expressively and natively"),
+            li(i("☕"), " Pure JavaScript, no special syntax to learn"),
+            li(i("🤙"), " Every element is simple a function call"),
+            li(i("🪪"), " Optionally pass attributes, properties, ", code("data"), " and ", code("aria"), " as an object"),
+            li(i("⚡"), " Supports Custom Elements with Pascal-cased names for easy identification"),
+            li(i("🚫"), " No need for a build tool"),
+            li(i("📦"), " Standard ES Module"),
           ),
 
           h2("Overview"),
