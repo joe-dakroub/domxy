@@ -374,15 +374,15 @@ document.body.append(nameForm)`,
             ),
           ),
 
-          p(a({ href: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes" }, "Data attributes"), " can be assigned using Camel case names or the ", code("dataset"), " property:"),
+          p(a({ href: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes" }, "Data attributes"), " and ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" }, "ARIA attributes"), " can be assigned using Camel case names or the ", code("dataset"), " or ", code("aria"), " property:"),
           h3("JavaScript"),
           pre({ class: "shj-lang-js" },
-            code(`span({ aria: { labelledby: "tac", }, ariaChecked: true, role: "checkbox", tabindex: 0 }),
+            code(`span({ aria: { labelledby: "tac", }, ariaChecked: true, dataset: { test: true }, role: "checkbox", tabindex: 0 }),
 span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
           ),
           h3("DOM"),
           pre({ class: "shj-lang-html" },
-            code(`<span aria-checked="false" aria-labelledby="tac" role="checkbox" tabindex="0"></span>
+            code(`<span aria-checked="false" aria-labelledby="tac" data-test="true" role="checkbox" tabindex="0"></span>
 <span id="tac">I agree to the Terms and Conditions.</span>`)
           ),
 
