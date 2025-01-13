@@ -24,7 +24,7 @@ const toKebabCase = (name) => {
 };
 
 /**
- * Proxy handler for creating DOM/SVG elements.
+ * Proxy handler for creating HTML, SVG and DocumentFragments.
  */
 export const domxy = new Proxy({}, {
   get: (_, tag) => {
