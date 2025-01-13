@@ -425,11 +425,10 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
           ),
           strong({ class: "alert" }, "Property values do not get stringified. Not recommended for large sets of data."),
 
-          p("While not a ", strong("domxy"), " feature, if used inside of a JavaScript class, you can take advantage of inline property assignment to 'define and assign' elements as references for later use:"),
+          p("While not a ", strong("domxy"), " feature, if used inside of a JavaScript class, you can take advantage of inline property assignment to \"define and assign\" elements as references for later use:"),
           pre({ class: "shj-lang-js" },
             code(`class HsCard extends BitElement {
-  static properties = {
-    copy: { type: String, required: true },
+  static properties = {    copy: { type: String, required: true },
     image: { type: String },
     link: { type: URL },
     title: { type: String, required: true },

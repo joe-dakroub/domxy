@@ -185,28 +185,28 @@ While not a **domxy** feature, if used inside of a JavaScript class, you can tak
 ```js
 class HsCard extends BitElement {
   static properties = {
-    "copy": { type: String, required: true },
-    "image": { type: String },
-    "link": { type: URL },
-    "title": { type: String, required: true },
+    copy: { type: String, required: true },
+    image: { type: String },
+    link: { type: URL },
+    title: { type: String, required: true },
   }
 
   constructor() {
     super();
     this.shadowRoot.append(
-      this.$image = img({ alt: "" }),
-      this.$title = h2(),
-      this.$copy = p("Default copy ",
-        this.$link = a("Card link")
+      this.imageEl = img({ alt: "" }),
+      this.titleEl = h2(),
+      this.copyEl = p("Default copy ",
+        this.linkEl = a("Card link")
       ),
-    );
+    )
   }
 
   update() {
-    this.$copy.textContent = this.copy;
-    this.$image.src = this.image;
-    this.$link.href = this.link.href;
-    this.$title.textContent = this.title;
+    this.copyEl.textContent = this.copy
+    this.imageEl.src = this.image
+    this.linkEl.href = this.link.href
+    this.titleEl.textContent = this.title
   }
 }
 ```
