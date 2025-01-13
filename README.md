@@ -246,5 +246,5 @@ document.body.append(
 ## Changelog
 Detailed changes for each release are documented in the [release notes]().
 
-## Sponsorship
-If you find **domxy** useful, please consider [becoming a sponsor]().
+## Donations
+If you find **domxy** useful, please consider [a small donation](https://www.paypal.com/donate/?business=4QSWBKHDKBNEN&no_recurring=0&item_name=Building+thoughtful+software+for+the+Web.&currency_code=USD).
