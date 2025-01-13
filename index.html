@@ -286,13 +286,13 @@
         `),
       );
 
-      const page = fragment(
+      const body = fragment(
         main(
           h1({ class: "title", id: "title" },
             span({ ariaHidden: true },
-              "</>",
-              span({ style: "opacity: 0.5;" }, ">"),
-              span({ style: "opacity: 0.25;" }, ">"),
+              "&lt;/&gt;",
+              span({ style: "opacity: 0.5;" }, "&gt;"),
+              span({ style: "opacity: 0.25;" }, "&gt;"),
             ),
             " domxy"
           ),
@@ -333,13 +333,13 @@ document.body.append(nameForm)`,
           ),
           h3("DOM"),
           pre({ class: "shj-lang-html" },
-            code(`<form data-controller="hello">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input data-hello-target="name" id="name" name="name" placeholder="enter a name" type="text">
-  </div>
-  <sl-button data-action="click->hello#greet">Submit</sl-button>
-</form>`,
+            code(`&lt;form data-controller="hello"&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="name"&gt;Name&lt;/label&gt;
+    &lt;input data-hello-target="name" id="name" name="name" placeholder="enter a name" type="text"&gt;
+  &lt;/div&gt;
+  &lt;sl-button data-action="click->hello#greet"&gt;Submit&lt;/sl-button&gt;
+&lt;/form&gt;`,
             ),
           ),
 
@@ -381,8 +381,8 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
           ),
           h3("DOM"),
           pre({ class: "shj-lang-html" },
-            code(`<span aria-checked="false" aria-labelledby="tac" data-test="true" role="checkbox" tabindex="0"></span>
-<span id="tac">I agree to the Terms and Conditions.</span>`)
+            code(`&lt;span aria-checked="false" aria-labelledby="tac" data-test="true" role="checkbox" tabindex="0"&gt;&lt;/span&gt;
+&lt;span id="tac"&gt;I agree to the Terms and Conditions.&lt;/span&gt;`)
           ),
 
           p("Create SVG elements just like any other HTML element:"),
@@ -409,8 +409,8 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
           h3("DOM"),
           pre({ class: "shj-lang-html" },
             code(`#document-fragment
-<h1>Title</h1>
-<p>Intro paragraph.</p>`),
+&lt;h1&gt;Title&lt;/h1&gt;
+&lt;p&gt;Intro paragraph.&lt;/p&gt;`),
           ),
           strong({ class: "alert" }, "DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted."),
 
@@ -421,7 +421,7 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
           ),
           h3("DOM"),
           pre({ class: "shj-lang-html" },
-            code(`<div data-model='{"type":"user","active":false}'></div>`)
+            code(`&lt;div data-model='{"type":"user","active":false}'&gt;&lt;/div&gt;`)
           ),
           strong({ class: "alert" }, "Property values do not get stringified. Not recommended for large sets of data."),
 
@@ -471,17 +471,16 @@ document.body.append(
   main(
     h1("Hello, domxy.")
   )
-)
-`)
+)`)
           ),
 
           h2("Downloads"),
           ul(
             li(
-              a({ href: "./domxy.js" }, "domxy.js (3.3 KB)"),
+              a({ href: "./domxy.js" }, "domxy.js (3.6 KB)"),
             ),
             li(
-              a({ href: "./domxy.min.js" }, "domxy.min.js (1.3 KB)"),
+              a({ href: "./domxy.min.js" }, "domxy.min.js (1.5 KB)"),
             )
           ),
 
@@ -512,7 +511,7 @@ document.body.append(
       );
 
       document.head.append(head);
-      document.body.append(page);
+      document.body.append(body);
     </script>
   </head>
   <body></body>

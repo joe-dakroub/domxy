@@ -232,8 +232,8 @@ document.body.append(
 ```
 
 ## Downloads
-- [domxy.js (3.3 KB)](https://domxy.js.org/domxy.js)
-- [domxy.min.js (1.3 KB)](https://domxy.js.org/domxy.min.js)
+- [domxy.js (3.6 KB)](https://domxy.js.org/domxy.js)
+- [domxy.min.js (1.5 KB)](https://domxy.js.org/domxy.min.js)
 
 ## Tests
 1. Run **tests.html** in a web browser

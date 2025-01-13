@@ -98,6 +98,8 @@ export const domxy = new Proxy({}, {
       for (const child of children) {
         if (Array.isArray(child)) {
           element.append(...child);
+        } else if (typeof child === 'string') {
+          element.insertAdjacentHTML("beforeend", child);
         } else {
           element.append(child);
         }
