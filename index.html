@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Domxy - Elegant DOM creation</title>
+    <title>domxy - Lightweight JavaScript Library for Creating HTML and SVG Elements</title>
     <script type="module">
       import { domxy } from "./domxy.js";
 
@@ -296,7 +296,7 @@
             ),
             " domxy"
           ),
-          p("A simple and lightweight way to create HTML and SVG elements in JavaScript."),
+          p("A lightweight library for effortlessly creating HTML and SVG elements in JavaScript."),
 
           h2("Example"),
           h3("JavaScript"),
@@ -345,27 +345,26 @@ document.body.append(nameForm)`,
 
           h2("Features"),
           ul(
-            li(i("✨"), " Create HTML and SVG DOM elements expressively and natively"),
+            li(i("✨"), " Create HTML and SVG elements expressively"),
             li(i("☕"), " Pure JavaScript, no special syntax to learn"),
-            li(i("🤙"), " Every element is simple a function call"),
-            li(i("🪪"), " Optionally pass attributes, properties, ", code("data"), " and ", code("aria"), " as an object"),
-            li(i("⚡"), " Supports Custom Elements with Pascal-cased names for easy identification"),
+            li(i("🤙"), " Every element is a function call"),
+            li(i("🪪"), " Optionally pass attributes and properties, including ", code("data"), " and ", code("aria")),
+            li(i("⚡"), " Supports Custom Elements with Pascal-cased names"),
             li(i("🚫"), " No need for a build tool"),
             li(i("📦"), " Standard ES Module"),
           ),
 
           h2("Overview"),
-          p(strong("domxy"), " is a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" }, "JavaScript Proxy"), " object that generates elements based on the name of the function being called."),
-          p("You must ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" }, "destructure"), " the element names from the ", strong("domxy"), " object before using:"),
+          p(strong("domxy"), " is a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" }, "JavaScript Proxy"), " object that generates HTML and SVG DOM elements using an HTML-like syntax in pure JavaScript."),
+          p("You must ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" }, "destructure"), " the elements from the ", strong("domxy"), " object before using:"),
           pre({ class: "shj-lang-js" },
             code(
               `const { div, form, input, label, SlButton } = domxy`,
             ),
           ),
-          p("It is usually easiest to markup the DOM tree first using whatever elements you need, and then come back and destructure the used elements after. ", a({ href: "https://github.com/features/copilot" }, "Copilot"), " can help with this."),
-          strong({ class: "alert" }, "An error will be thrown if you try to access an element function without it being declared first."),
+          strong({ class: "alert" }, "An error will be thrown if you try to access an element without it being declared first."),
 
-          p("Custom Element instances can be created using Pascal case:"),
+          p("Custom Element instances can be created using Pascal case naming:"),
           pre({ class: "shj-lang-js" },
             code(`form(
   SlInput({ variant: "danger" }), // sl-input
@@ -455,7 +454,7 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
   }
 }`)
           ),
-          p("For more examples of how to use ", strong("domxy"), " in your projects, be sure ", strong("View Source"), " in your browser."),
+          p("For more examples of how to use ", strong("domxy"), " in your projects, be sure to ", strong("View Source"), " in your browser."),
 
           h2("Why?"),
           p("Whether you ", u("need to"), " or ", u("enjoy"), " working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get."),

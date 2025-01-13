@@ -1,6 +1,6 @@
 # [domxy](https://domxy.js.org)
 
-A simple and lightweight way to create HTML and SVG elements in JavaScript.
+A lightweight library for effortlessly creating HTML and SVG elements in JavaScript.
 
 
 ## Example
@@ -49,28 +49,26 @@ document.body.append(nameForm)
 ```
 
 ## Features
-- ✨ Create HTML and SVG elements expressively and natively
+- ✨ Create HTML and SVG elements expressively
 - ☕ Pure JavaScript, no special syntax to learn
-- 🤙 Every element is simple a function call
-- 🪪 Optionally pass attributes, properties, `data` and `aria` as an object
-- ⚡ Supports Custom Elements with Pascal-cased names for easy identification
+- 🤙 Every element is a function call
+- 🪪 Optionally pass attributes and properties, including `data` and `aria`
+- ⚡ Supports Custom Elements with Pascal-cased names
 - 🚫 No need for a build tool
 - 📦 Standard ES Module
 
 ## Overview
-**domxy** is a tiny [JavaScript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that generates elements based on the name of the function being called.
+**domxy** is a [JavaScript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that generates HTML and SVG DOM elements using an HTML-like syntax in pure JavaScript.
 
-You must [destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) the element names from the **domxy** object before using:
+You must [destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) the elements from the **domxy** object before using:
 
 ```js
 const { div, form, input, label, SlButton } = domxy
 ```
 
-It is usually easiest to markup the DOM tree first using whatever elements you need, and then come back and destructure the used elements after. [Copilot](https://github.com/features/copilot) can help with this.
-
 **⚠️ An error will be thrown if you try to access an element function without it being declared first.**
 
-Custom Element instances can be created using Pascal case:
+Custom Element instances can be created using Pascal case naming:
 
 ```js
 form(
@@ -79,16 +77,24 @@ form(
 )
 ```
 
-[Data attributes](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes) can be assigned using Camel case names or the `dataset` property:
+[Data attributes](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes) and [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) can be assigned using Camel case names or the `dataset` or `aria` property:
 
 ### JavaScript
 ```js
-div({ dataColor: "tomato", dataset: { size: "lg", type: "container" } })
+span({
+  aria: { labelledby: "tac", },
+  ariaChecked: true,
+  dataset: { test: true },
+  role: "checkbox",
+  tabindex: 0
+}),
+span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
 ```
 
 ### DOM
 ```html
-<div data-color="tomato" data-size="lg" data-type="container"></div>
+<span aria-checked="false" aria-labelledby="tac" data-test="true" role="checkbox" tabindex="0"></span>
+<span id="tac">I agree to the Terms and Conditions.</span>
 ```
 
 Boolean properties are set using `true` or `false`:
