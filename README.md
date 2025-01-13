@@ -1,10 +1,7 @@
 # [domxy](https://domxy.js.org)
-
 A lightweight library for effortlessly creating HTML and SVG elements in JavaScript.
 
-
 ## Example
-
 ### JavaScript
 ```js
 // Shoelace SlButton component
