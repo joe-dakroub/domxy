@@ -241,7 +241,7 @@ document.body.append(
 **domxy** was created by [Joe Dakroub](https://github.com/joe-dakroub) and is released under the [Unlicense](https://unlicense.org/).
 
 ## Changelog
-Detailed changes for each release are documented in the [release notes]().
+Detailed changes for each release are documented in the [release notes](https://github.com/joe-dakroub/domxy/releases).
 
 ## Donations
 If you find **domxy** useful, please consider [a small donation](https://www.paypal.com/donate/?business=4QSWBKHDKBNEN&no_recurring=0&item_name=Building+thoughtful+software+for+the+Web.&currency_code=USD).
