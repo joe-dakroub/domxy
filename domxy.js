@@ -2,6 +2,7 @@
  * domxy - https://domxy.js.org
  * A lightweight library for effortlessly creating HTML and SVG elements in JavaScript.
  * @author Joe Dakroub <joe.dakroub@me.com>
+ * @version 1.0.0
  */
 
 /**
