@@ -39,269 +39,257 @@
         ul,
       } = domxy;
 
-      const head = fragment(
-        style(`
-          @font-face {
-            font-family: "Label";
-            src: url("./glyphicons-label-bold.woff2") format("woff2");
-          }
+      document.head.append(
+        fragment(
+          style(`
+            @font-face {
+              font-family: "Label";
+              src: url("./glyphicons-label-bold.woff2") format("woff2");
+            }
 
-          :root {
-            box-sizing: border-box;
-            line-height: 1.4;
-            /* Prevent text size adjustments in WebKit and Gecko browsers */
-            -moz-text-size-adjust: none;
-            -webkit-text-size-adjust: none;
-            text-size-adjust: none;
-          }
+            :root {
+              box-sizing: border-box;
+              line-height: 1.4;
+              /* Prevent text size adjustments in WebKit and Gecko browsers */
+              -moz-text-size-adjust: none;
+              -webkit-text-size-adjust: none;
+              text-size-adjust: none;
+            }
 
-          *,
-          *::before,
-          *::after {
-            box-sizing: inherit;
-          }
+            *,
+            *::before,
+            *::after {
+              box-sizing: inherit;
+            }
 
-          a {
-            color: currentColor;
-            font-weight: bold;
-            text-underline-offset: 0.25rem;
-            text-decoration-thickness: 0.125rem;
-          }
+            a {
+              color: currentColor;
+              font-weight: bold;
+              text-underline-offset: 0.25rem;
+              text-decoration-thickness: 0.125rem;
+            }
 
-          a:focus {
-            outline: 2px solid currentColor;
-            outline-offset: 0.25rem;
-          }
+            a:focus {
+              outline: 2px solid currentColor;
+              outline-offset: 0.25rem;
+            }
 
-          body {
-            background-color: aquamarine;
-            font-family: monospace-ui, monospace;
-            margin: 0 auto;
-            max-width: 80ch;
-            padding: 0;
-          }
+            body {
+              background-color: aquamarine;
+              font-family: monospace-ui, monospace;
+              margin: 0 auto;
+              max-width: 80ch;
+              padding: 0;
+            }
 
-          code {
-            background-color: white;
-            border: 0.125rem solid black;
-            border-radius: 0.25rem;
-            box-shadow:
-              1px 1px 0 0 black,
-              2px 2px 0 0 black;
-            font-weight: bold;
-            padding: 0.125rem 0.25rem;
-          }
+            *:not(pre) code {
+              background-color: white;
+              border: 0.125rem solid black;
+              border-radius: 0.25rem;
+              box-shadow:
+                1px 1px 0 0 black,
+                2px 2px 0 0 black;
+              font-weight: bold;
+              padding: 0.125rem 0.25rem;
+            }
 
-          h1, h2 {
-            font-family: "Label", sans-serif;
-            margin-bottom: 1rem;
-          }
+            h1, h2 {
+              font-family: "Label", sans-serif;
+              margin-bottom: 1rem;
+            }
 
-          h1 {
-            font-size: 2.5rem;
-          }
+            h1 {
+              font-size: 2.5rem;
+            }
 
-          h2 {
-            border-bottom: 0.25rem solid currentColor;
-            font-size: 1.875rem;
-            padding-bottom: 0.125rem;
-          }
+            h2 {
+              border-bottom: 0.25rem solid currentColor;
+              font-size: 1.875rem;
+              padding-bottom: 0.125rem;
+            }
 
-          h3 {
-            font-size: 1.25rem;
-          }
+            h3 {
+              font-size: 1.25rem;
+            }
 
-          i {
-            font-family: sans-serif;
-            font-style: normal;
-          }
+            i {
+              font-family: sans-serif;
+              font-style: normal;
+            }
 
-          li {
-            margin-bottom: 1rem;
-          }
+            li {
+              margin-bottom: 1rem;
+            }
 
-          main {
-            padding: 1rem;
-          }
+            main {
+              padding: 1rem;
+            }
 
-          p {
-            line-height: 2;
-            margin-bottom: 1.5rem;
-          }
+            p {
+              line-height: 2;
+              margin-bottom: 1.5rem;
+            }
 
-          pre {
-            background-color: white;
-            border: 0.25rem solid black;
-            border-radius: 0.666rem;
-            box-shadow:
-              1px 1px 0 0 black,
-              2px 2px 0 0 black,
-              3px 3px 0 0 black,
-              4px 4px 0 0 black;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            overflow: auto;
-            padding: 0.5rem;
-            white-space: pre-wrap;
-          }
+            pre {
+              background-color: white;
+              border: 0.25rem solid black;
+              border-radius: 0.666rem;
+              box-shadow:
+                1px 1px 0 0 black,
+                2px 2px 0 0 black,
+                3px 3px 0 0 black,
+                4px 4px 0 0 black;
+              font-size: 1rem;
+              margin-bottom: 1rem;
+              overflow: auto;
+              padding: 0.5rem;
+              white-space: pre-wrap;
+            }
 
-          strong {
-            font-weight: bold;
-          }
+            strong {
+              font-weight: bold;
+            }
 
-          .alert {
-            background-color: yellow;
-            border: 0.25rem solid black;
-            border-radius: 0.666rem;
-            box-shadow:
-              1px 1px 0 0 black,
-              2px 2px 0 0 black,
-              3px 3px 0 0 black,
-              4px 4px 0 0 black;
-            display: block;
-            margin: 1.5rem 0;
-            padding: 1rem;
-          }
+            .alert {
+              background-color: yellow;
+              border: 0.25rem solid black;
+              border-radius: 0.666rem;
+              box-shadow:
+                1px 1px 0 0 black,
+                2px 2px 0 0 black,
+                3px 3px 0 0 black,
+                4px 4px 0 0 black;
+              display: block;
+              margin: 1.5rem 0;
+              padding: 1rem;
+            }
 
-          ol, ul {
-            margin-bottom: 2rem;
-            padding-left: 2rem;
-          }
+            ol, ul {
+              margin-bottom: 2rem;
+              padding-left: 2rem;
+            }
 
-          u {
-            text-decoration-style: double;
-            text-decoration-thickness: 0.125rem;
-            text-underline-offset: 0.25rem;
-          }
+            u {
+              text-decoration-style: double;
+              text-decoration-thickness: 0.125rem;
+              text-underline-offset: 0.25rem;
+            }
 
-          .logo-icon {
-            height: 3rem;
-            width: 3rem;
-          }
+            .logo-icon {
+              height: 3rem;
+              width: 3rem;
+            }
 
-          [class*=shj-lang-] {
-            margin: 1rem 0 2rem 0;
-            max-width: min(100%,100vw);
-            white-space: pre;
-          }
+            [class*=shj-lang-] {
+              margin: 1rem 0 2rem 0;
+              max-width: min(100%, 100vw);
+              white-space: pre;
+            }
 
-          .shj-inline {
-            border-radius: 0.25rem;
-            display: inline-block;
-            margin: 0;
-            padding: 0.125rem 0.25rem;
-          }
+            .shj-inline {
+              border-radius: 0.25rem;
+              display: inline-block;
+              margin: 0;
+              padding: 0.125rem 0.25rem;
+            }
 
-          [class*=shj-lang-]::selection {
-            background: aquamarine;
-          }
+            [class*=shj-lang-]::selection {
+              background: aquamarine;
+            }
 
-          [class*=shj-lang-] ::selection {
-            background: aquamarine;
-          }
+            [class*=shj-lang-] ::selection {
+              background: aquamarine;
+            }
 
-          [class*=shj-lang-] > div {
-            display: flex;
-            overflow: auto;
-          }
+            [class*=shj-lang-] > div {
+              display: flex;
+              overflow: auto;
+            }
 
-          [class*=shj-lang-] >div :last-child {
-            flex: 1;
-            outline: none;
-          }
+            [class*=shj-lang-] >div :last-child {
+              flex: 1;
+              outline: none;
+            }
 
-          .shj-numbers {
-            counter-reset: line;
-            padding-left: 0.25rem;
-          }
+            .shj-numbers {
+              counter-reset: line;
+              padding-left: 0.25rem;
+            }
 
-          .shj-numbers div {
-            padding-right: 0.25rem;
-          }
+            .shj-numbers div {
+              padding-right: 0.25rem;
+            }
 
-          .shj-numbers div:before {
-            color: gray;
-            content: counter(line);
-            text-align: right;
-            counter-increment: line;
-            margin-right: 0.5rem;
-            display: block;
-          }
+            .shj-numbers div:before {
+              color: gray;
+              content: counter(line);
+              counter-increment: line;
+              display: block;
+              margin-right: 0.5rem;
+              text-align: right;
+            }
 
-          .shj-syn-cmnt {
-            font-style: italic;
-          }
+            .shj-syn-cmnt {
+              font-style: italic;
+            }
 
-          .shj-syn-deleted,
-          .shj-syn-var {
-            color: tomato;
-          }
+            .shj-syn-deleted,
+            .shj-syn-var {
+              color: tomato;
+            }
 
-          .shj-oneline {
-            padding: 0.75rem;
-          }
+            .shj-oneline {
+              padding: 0.75rem;
+            }
 
-          .shj-lang-http.shj-oneline .shj-syn-kwd {
-            color: #fff;
-            background: blue;
-            border-radius: 0.25rem;
-            padding: 0.25rem 0.375rem;
-          }
+            .shj-syn-bool,
+            .shj-syn-deleted,
+            .shj-syn-err,
+            .shj-syn-kwd,
+            .shj-syn-num,
+            .shj-syn-var {
+              color: teal;
+              font-weight: bold;
+            }
 
-          [class*=shj-lang-]:before {
-            color: red;
-          }
+            .shj-syn-section,
+            .shj-syn-type,
+            .shj-syn-class,
+            .shj-syn-func {
+              color: darkviolet;
+              font-weight: bold;
+            }
 
-          .shj-syn-insert {
-            color: red;
-          }
+            .shj-syn-insert,
+            .shj-syn-str,
+            .shj-numbers {
+              color: deeppink;
+            }
 
-          .shj-syn-bool,
-          .shj-syn-deleted,
-          .shj-syn-err,
-          .shj-syn-kwd,
-          .shj-syn-num,
-          .shj-syn-var {
-            color: teal;
-            font-weight: bold;
-          }
-
-          .shj-syn-section,
-          .shj-syn-type,
-          .shj-syn-class,
-          .shj-syn-func {
-            color: darkviolet;
-            font-weight: bold;
-          }
-
-          .shj-syn-insert,
-          .shj-syn-str,
-          .shj-numbers {
-            color: deeppink;
-          }
-
-          .shj-syn-cmnt {
-            font-weight: bold;
-          }
-        `),
+            .shj-syn-cmnt {
+              font-weight: bold;
+            }
+          `),
+        )
       );
 
-      const body = fragment(
-        main(
-          h1({ class: "title", id: "title" },
-            span({ ariaHidden: true },
-              "&lt;/&gt;",
-              span({ style: "opacity: 0.5;" }, "&gt;"),
-              span({ style: "opacity: 0.25;" }, "&gt;"),
+      document.body.append(
+        fragment(
+          main(
+            h1({ class: "title", id: "title" },
+              span({ ariaHidden: true },
+                "&lt;/&gt;",
+                span({ style: "opacity: 0.5;" }, "&gt;"),
+                span({ style: "opacity: 0.25;" }, "&gt;"),
+              ),
+              " domxy"
             ),
-            " domxy"
-          ),
-          p("A lightweight library for effortlessly creating HTML and SVG elements in JavaScript."),
+            p("A lightweight library for effortlessly creating HTML and SVG elements in JavaScript."),
 
-          h2("Example"),
-          h3("JavaScript"),
-          pre({ class: "shj-lang-js" },
-            code(`// Shoelace SlButton component
+            h2("Example"),
+            h3("JavaScript"),
+            pre({ class: "shj-lang-js" },
+              code(`// Shoelace SlButton component
 import "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/button/button.js"
 
 // Domxy library
@@ -329,65 +317,65 @@ const nameForm = form({ dataController: "hello" } },
 
 // Append to the DOM
 document.body.append(nameForm)`,
+              ),
             ),
-          ),
-          h3("DOM"),
-          pre({ class: "shj-lang-html" },
-            code(`&lt;form data-controller="hello"&gt;
+            h3("DOM"),
+            pre({ class: "shj-lang-html" },
+              code(`&lt;form data-controller="hello"&gt;
   &lt;div class="form-group"&gt;
     &lt;label for="name"&gt;Name&lt;/label&gt;
     &lt;input data-hello-target="name" id="name" name="name" placeholder="enter a name" type="text"&gt;
   &lt;/div&gt;
   &lt;sl-button data-action="click->hello#greet"&gt;Submit&lt;/sl-button&gt;
 &lt;/form&gt;`,
+              ),
             ),
-          ),
 
-          h2("Features"),
-          ul(
-            li(i("✨"), " Create HTML and SVG elements expressively"),
-            li(i("☕"), " Pure JavaScript, no special syntax to learn"),
-            li(i("🤙"), " Every element is a function call"),
-            li(i("🪪"), " Optionally pass attributes and properties, including ", code("data"), " and ", code("aria")),
-            li(i("⚡"), " Supports Custom Elements with Pascal-cased names"),
-            li(i("🚫"), " No need for a build tool"),
-            li(i("📦"), " Standard ES Module"),
-          ),
-
-          h2("Overview"),
-          p(strong("domxy"), " is a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" }, "JavaScript Proxy"), " object that generates HTML and SVG DOM elements using an HTML-like syntax in pure JavaScript."),
-          p("You must ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" }, "destructure"), " the elements from the ", strong("domxy"), " object before using:"),
-          pre({ class: "shj-lang-js" },
-            code(
-              `const { div, form, input, label, SlButton } = domxy`,
+            h2("Features"),
+            ul(
+              li(i({ ariaHidden: true }, "✨"), " Create HTML and SVG elements expressively"),
+              li(i({ ariaHidden: true }, "☕"), " Pure JavaScript, no special syntax to learn"),
+              li(i({ ariaHidden: true }, "🤙"), " Every element is a function call"),
+              li(i({ ariaHidden: true }, "🪪"), " Optionally pass attributes and properties, including ", code("data"), " and ", code("aria")),
+              li(i({ ariaHidden: true }, "⚡"), " Supports Custom Elements with Pascal-cased names"),
+              li(i({ ariaHidden: true }, "🚫"), " No need for a build tool"),
+              li(i({ ariaHidden: true }, "📦"), " Standard ES Module"),
             ),
-          ),
-          strong({ class: "alert" }, "An error will be thrown if you try to access an element without it being declared first."),
 
-          p("Custom Element instances can be created using Pascal case naming:"),
-          pre({ class: "shj-lang-js" },
-            code(`form(
+            h2("Overview"),
+            p(strong("domxy"), " is a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" }, "JavaScript Proxy"), " object that generates HTML and SVG DOM elements using an HTML-like syntax in pure JavaScript."),
+            p("You must ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" }, "destructure"), " the elements from the ", strong("domxy"), " object before using:"),
+            pre({ class: "shj-lang-js" },
+              code(
+                `const { div, form, input, label, SlButton } = domxy`,
+              ),
+            ),
+            strong({ class: "alert" }, "An error will be thrown if you try to access an element without it being declared first."),
+
+            p("Custom Element instances can be created using Pascal case naming:"),
+            pre({ class: "shj-lang-js" },
+              code(`form(
   SlInput({ variant: "danger" }), // sl-input
   SlButton({ type: "submit" }, "Submit") // sl-button
 )`,
+              ),
             ),
-          ),
 
-          p(a({ href: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes" }, "Data attributes"), " and ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" }, "ARIA attributes"), " can be assigned using Camel case names or the ", code("dataset"), " or ", code("aria"), " property:"),
-          h3("JavaScript"),
-          pre({ class: "shj-lang-js" },
-            code(`span({ aria: { labelledby: "tac", }, ariaChecked: true, dataset: { test: true }, role: "checkbox", tabindex: 0 }),
+            p(a({ href: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_HTML_problems/Use_data_attributes" }, "Data attributes"), " and ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" }, "ARIA attributes"), " can be assigned using Camel case names or the ", code("dataset"), " or ", code("aria"), " property:"),
+            h3("JavaScript"),
+            pre({ class: "shj-lang-js" },
+              code(`span({ aria: { labelledby: "tac", }, ariaChecked: true, dataset: { test: true }, role: "checkbox", tabindex: 0 }),
 span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
-          ),
-          h3("DOM"),
-          pre({ class: "shj-lang-html" },
-            code(`&lt;span aria-checked="false" aria-labelledby="tac" data-test="true" role="checkbox" tabindex="0"&gt;&lt;/span&gt;
+            ),
+            h3("DOM"),
+            pre({ class: "shj-lang-html" },
+              code(`&lt;span aria-checked="false" aria-labelledby="tac" data-test="true" role="checkbox" tabindex="0"&gt;&lt;/span&gt;
 &lt;span id="tac"&gt;I agree to the Terms and Conditions.&lt;/span&gt;`)
-          ),
+            ),
 
-          p("Create SVG elements just like any other HTML element:"),
-          pre({ class: "shj-lang-js" },
-            code(`button({ type: "button" },
+            p("Create SVG elements just like any other HTML element:"),
+            pre({ class: "shj-lang-js" },
+              code(`button({ type: "button" },
   svg({ ariaHidden: true, class: "icon", viewBox: "0 0 20 20" },
     path({
       d: "M17,15.98059V17a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V15.98059a.9998.9998,0,0,1,.37531-.78082l2.556-2.0448A4.00431,4.00431,0,0,0,9.2998,15h1.4004a4.00431,4.00431,0,0,0,3.36853-1.845l2.556,2.0448A.9998.9998,0,0,1,17,15.98059ZM7.47211,11.81226A2,2,0,0,0,9.29974,13h1.40052a2,2,0,0,0,1.82763-1.18774L13.65527,9.2757A4.00024,4.00024,0,0,0,14,7.65112V6a3.97577,3.97577,0,0,0-4-4A4.1928,4.1928,0,0,0,6,6.17206V7.65112A4.00024,4.00024,0,0,0,6.34473,9.2757Z",
@@ -395,40 +383,41 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
   ),
   "Acccount"
 )`)
-          ),
+            ),
 
-          p("Create a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment" }, "DocumentFragment"), " using the ", code("fragment"), " function:"),
+            p("Create a ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment" }, "DocumentFragment"), " using the ", code("fragment"), " function:"),
 
-          h3("JavaScript"),
-          pre({ class: "shj-lang-js" },
-            code(`fragment(
+            h3("JavaScript"),
+            pre({ class: "shj-lang-js" },
+              code(`fragment(
   h1("Title"),
   p("Intro paragraph.")
 )`),
-          ),
-          h3("DOM"),
-          pre({ class: "shj-lang-html" },
-            code(`#document-fragment
+            ),
+            h3("DOM"),
+            pre({ class: "shj-lang-html" },
+              code(`#document-fragment
 &lt;h1&gt;Title&lt;/h1&gt;
 &lt;p&gt;Intro paragraph.&lt;/p&gt;`),
-          ),
-          strong({ class: "alert" }, "DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted."),
+            ),
+            strong({ class: "alert" }, "DocumentFragments do not accept attributes or properties. A warning will be thrown when attempted."),
 
-          p("In addition to ", code("String"), ", ", code("Number"), ", and ", code("Boolean"), " types, attributes can accept ", code("Date"), ", ", code("Array"), " and ", code("Object"), " types as values by calling ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" }, "JSON.stringify()"), " on them:"),
-          h3("JavaScript"),
-          pre({ class: "shj-lang-js" },
-            code(`div({ dataModel: { type: "user", active: false } })`)
-          ),
-          h3("DOM"),
-          pre({ class: "shj-lang-html" },
-            code(`&lt;div data-model='{"type":"user","active":false}'&gt;&lt;/div&gt;`)
-          ),
-          strong({ class: "alert" }, "Property values do not get stringified. Not recommended for large sets of data."),
+            p("In addition to ", code("String"), ", ", code("Number"), ", and ", code("Boolean"), " types, attributes can accept ", code("Date"), ", ", code("Array"), " and ", code("Object"), " types as values by calling ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" }, "JSON.stringify()"), " on them:"),
+            h3("JavaScript"),
+            pre({ class: "shj-lang-js" },
+              code(`div({ dataModel: { type: "user", active: false } })`)
+            ),
+            h3("DOM"),
+            pre({ class: "shj-lang-html" },
+              code(`&lt;div data-model='{"type":"user","active":false}'&gt;&lt;/div&gt;`)
+            ),
+            strong({ class: "alert" }, "Property values do not get stringified. Not recommended for large sets of data."),
 
-          p("While not a ", strong("domxy"), " feature, if used inside of a JavaScript class, you can take advantage of inline property assignment to \"define and assign\" elements as references for later use:"),
-          pre({ class: "shj-lang-js" },
-            code(`class HsCard extends BitElement {
-  static properties = {    copy: { type: String, required: true },
+            p("While not a ", strong("domxy"), " feature, if used inside of a JavaScript class, you can take advantage of inline property assignment to \"define and assign\" elements as references for later use:"),
+            pre({ class: "shj-lang-js" },
+              code(`class HsCard extends BitElement {
+  static properties = {
+    copy: { type: String, required: true },
     image: { type: String },
     link: { type: URL },
     title: { type: String, required: true },
@@ -452,18 +441,18 @@ span({ id: "tac" }, "I agree to the Terms and Conditions.")`)
     this.titleEl.textContent = this.title
   }
 }`)
-          ),
-          p("For more examples of how to use ", strong("domxy"), " in your projects, be sure to ", strong("View Source"), " in your browser."),
+            ),
+            p("For more examples of how to use ", strong("domxy"), " in your projects, be sure to ", strong("View Source"), " in your browser."),
 
-          h2("Why?"),
-          p("Whether you ", u("need to"), " or ", u("enjoy"), " working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get."),
-          p(strong("domxy"), " makes working with DOM nodes easy, expressive and powerful by using regular JavaScript functions as HTML, SVG, and DocumentFragment node names."),
-          p("Create DOM nodes as easy as writing HTML."),
+            h2("Why?"),
+            p("Whether you ", u("need to"), " or ", u("enjoy"), " working with DOM elements directly in JavaScript, you know how verbose creating and forming them into even a modest tree can get."),
+            p(strong("domxy"), " makes working with DOM nodes easy, expressive and powerful by using regular JavaScript functions as HTML, SVG, and DocumentFragment node names."),
+            p("Create DOM nodes as easy as writing HTML."),
 
-          h2("Installation"),
-          p("Import ", strong("domxy"), " as an ES module:"),
-          pre({ class: "shj-lang-js" },
-            code(`import { domxy } from "https://domxy.js.org/domxy.js"
+            h2("Installation"),
+            p("Import ", strong("domxy"), " as an ES module:"),
+            pre({ class: "shj-lang-js" },
+              code(`import { domxy } from "https://domxy.js.org/domxy.js"
 
 const { h1, main } = domxy
 
@@ -472,46 +461,44 @@ document.body.append(
     h1("Hello, domxy.")
   )
 )`)
-          ),
-
-          h2("Downloads"),
-          ul(
-            li(
-              a({ href: "./domxy.js" }, "domxy.js (3.7 KB)"),
             ),
-            li(
-              a({ href: "./domxy.min.js" }, "domxy.min.js (1.6 KB)"),
-            )
+
+            h2("Downloads"),
+            ul(
+              li(
+                a({ href: "./domxy.js" }, "domxy.js (3.7 KB)"),
+              ),
+              li(
+                a({ href: "./domxy.min.js" }, "domxy.min.js (1.6 KB)"),
+              )
+            ),
+
+            h2("Source Code"),
+            a({ href: "https://github.com/joe-dakroub/domxy" }, "Github Repository"),
+
+            h2("Tests"),
+            ol(
+              li("Run ", a({ href: "/tests.html" }, "tests.html"), " in a web browser"),
+              li("Open the Developer Tools and select the Console tab"),
+              li(strong("All tests passed!"), " or the error and line number will display in the console"),
+            ),
+
+            h2("License"),
+            p(strong("domxy"), " was created by ", a({ href: "https://github.com/joe-dakroub" }, "Joe Dakroub"), " and is released under the ", a({ href: "https://unlicense.org" }, "Unlicense"), "."),
+
+            h2("Changelog"),
+            p("Detailed changes for each release are documented in the ", a({ href: "https://github.com/joe-dakroub/domxy/releases" }, "release notes"), "."),
+
+            h2("Donations"),
+            p("If you find ", strong("domxy"), " useful, please consider ", a({ href: "https://www.paypal.com/donate/?business=4QSWBKHDKBNEN&no_recurring=0&item_name=Building+thoughtful+software+for+the+Web.&currency_code=USD" }, "a small donation"), ".")
           ),
 
-          h2("Source Code"),
-          a({ href: "https://github.com/joe-dakroub/domxy" }, "Github Repository"),
-
-          h2("Tests"),
-          ol(
-            li("Run ", a({ href: "/tests.html" }, "tests.html"), " in a web browser"),
-            li("Open the Developer Tools and select the Console tab"),
-            li(strong("All tests passed!"), " or the error and line number will display in the console"),
-          ),
-
-          h2("License"),
-          p(strong("domxy"), " was created by ", a({ href: "https://github.com/joe-dakroub" }, "Joe Dakroub"), " and is released under the ", a({ href: "https://unlicense.org" }, "Unlicense"), "."),
-
-          h2("Changelog"),
-          p("Detailed changes for each release are documented in the ", a({ href: "https://github.com/joe-dakroub/domxy/releases" }, "release notes"), "."),
-
-          h2("Donations"),
-          p("If you find ", strong("domxy"), " useful, please consider ", a({ href: "https://www.paypal.com/donate/?business=4QSWBKHDKBNEN&no_recurring=0&item_name=Building+thoughtful+software+for+the+Web.&currency_code=USD" }, "a small donation"), ".")
-        ),
-
-        script({ type: "module"}, `
-          import { highlightAll } from "./speed-highlight.js";
-          highlightAll();
-        `),
+          script({ type: "module"}, `
+            import { highlightAll } from "./speed-highlight.js";
+            highlightAll();
+          `),
+        )
       );
-
-      document.head.append(head);
-      document.body.append(body);
     </script>
   </head>
   <body></body>
