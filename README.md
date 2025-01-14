@@ -233,7 +233,7 @@ document.body.append(
 - [domxy.min.js (1.5 KB)](https://domxy.js.org/domxy.min.js)
 
 ## Tests
-1. Run **tests.html** in a web browser
+1. Run [tests.html](/tests.html) in a web browser
 2. Open the Developer Tools and select the Console tab
 3. **All tests passed!** or the error and line number will display in the console
 
