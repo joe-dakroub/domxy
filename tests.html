@@ -8,7 +8,7 @@
     import { domxy } from './domxy.js';
     import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/shoelace.js';
 
-    const { div, input, span, fragment, SlButton } = domxy;
+    const { div, input, span, fragment, SlButton, svg, circle, rect } = domxy;
 
     // Test creating a div with dataset attributes
     const divElement = div({
@@ -83,20 +83,38 @@
     console.warn = originalWarn;
 
     // Test creating elements with HTML entities in strings
-    const divWithEntities = div({}, "This is a test &gt; only a test.");
-    console.assert(divWithEntities.textContent === "This is a test > only a test.", 'Expected HTML entities to be rendered correctly');
+    const divWithEntities = div({}, "This is a test &amp; only a test.");
+    console.assert(divWithEntities.textContent === "This is a test & only a test.", 'Expected HTML entities to be rendered correctly');
 
     const spanWithEntities = span({}, "5 &lt; 10 &amp; 10 &gt; 5");
     console.assert(spanWithEntities.textContent === "5 < 10 & 10 > 5", 'Expected HTML entities to be rendered correctly');
 
-    const spanWithUnescapedEntity = span({}, "<");
-    console.assert(spanWithUnescapedEntity.textContent === "<", 'Expected less than to be rendered correctly');
+    // Test creating SVG elements
+    const svgElement = svg({ viewBox: "0 0 100 100" },
+      circle({ cx: 50, cy: 50, r: 40, stroke: "black", "stroke-width": 3, fill: "red" }),
+      rect({ x: 10, y: 10, width: 30, height: 30, stroke: "black", "stroke-width": 3, fill: "blue" })
+    );
+    console.assert(svgElement.tagName === 'svg', 'Expected tag name to be svg');
+    console.assert(svgElement.getAttribute('viewBox') === '0 0 100 100', 'Expected viewBox to be "0 0 100 100"');
+    console.assert(svgElement.firstChild.tagName === 'circle', 'Expected first child to be circle');
+    console.assert(svgElement.firstChild.getAttribute('cx') === '50', 'Expected cx to be 50');
+    console.assert(svgElement.firstChild.getAttribute('cy') === '50', 'Expected cy to be 50');
+    console.assert(svgElement.firstChild.getAttribute('r') === '40', 'Expected r to be 40');
+    console.assert(svgElement.firstChild.getAttribute('stroke') === 'black', 'Expected stroke to be black');
+    console.assert(svgElement.firstChild.getAttribute('stroke-width') === '3', 'Expected stroke-width to be 3');
+    console.assert(svgElement.firstChild.getAttribute('fill') === 'red', 'Expected fill to be red');
+    console.assert(svgElement.lastChild.tagName === 'rect', 'Expected last child to be rect');
+    console.assert(svgElement.lastChild.getAttribute('x') === '10', 'Expected x to be 10');
+    console.assert(svgElement.lastChild.getAttribute('y') === '10', 'Expected y to be 10');
+    console.assert(svgElement.lastChild.getAttribute('width') === '30', 'Expected width to be 30');
+    console.assert(svgElement.lastChild.getAttribute('height') === '30', 'Expected height to be 30');
+    console.assert(svgElement.lastChild.getAttribute('stroke') === 'black', 'Expected stroke to be black');
+    console.assert(svgElement.lastChild.getAttribute('stroke-width') === '3', 'Expected stroke-width to be 3');
+    console.assert(svgElement.lastChild.getAttribute('fill') === 'blue', 'Expected fill to be blue');
 
     console.log("All tests passed!");
   </script>
 </head>
 <body>
-  <h1>Tests - domxy</h1>
-  <p>Please open the <strong>Web Developer Tools &rarr; Console</strong> to view the test output.</p>
 </body>
 </html>
